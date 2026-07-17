@@ -33,5 +33,5 @@ split_contact_url: "https://gkjpalihan.com"
 split_contact_web: "WWW.GKJPALIHAN.COM"
 
 # --- GAMBAR EDITORIAL ---
-split_image: "/images/lookbook1.jpg"
+split_image: "images/lookbook1.jpg"
 ---
