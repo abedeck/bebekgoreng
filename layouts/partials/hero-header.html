@@ -2,14 +2,16 @@
     <div class="gallery-wrapper">
         <section class="gallery-grid">
             
-            <div class="gallery-item item-side item-bw">
+            <!-- Gambar Kiri (Muncul Pertama) -->
+            <div class="gallery-item item-side item-bw animate-hero delay-1">
                 <div class="img-wrapper">
                     <img src="{{ .Params.image_left | default "https://images.unsplash.com/photo-1513694203232-719a280e022f?q=80&w=600" | relURL }}" alt="{{ .Params.caption_left | default "Riverside Quarters" }}">
                 </div>
                 <div class="item-caption caption-left">{{ .Params.caption_left | default "Riverside Quarters" }}</div>
             </div>
 
-            <div class="gallery-item item-main item-color">
+            <!-- Gambar Tengah / Utama (Muncul Kedua) -->
+            <div class="gallery-item item-main item-color animate-hero delay-2">
                 <div class="img-wrapper">
                     <img src="{{ .Params.image_center | default "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=600" | relURL }}" alt="Modern Architecture">
                 </div>
@@ -19,7 +21,8 @@
                 </div>
             </div>
 
-            <div class="gallery-item item-side item-bw">
+            <!-- Gambar Kanan (Muncul Ketiga) -->
+            <div class="gallery-item item-side item-bw animate-hero delay-3">
                 <div class="img-wrapper">
                     <img src="{{ .Params.image_right | default "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?q=80&w=600" | relURL }}" alt="{{ .Params.caption_right | default "California, USA" }}">
                 </div>
@@ -28,9 +31,10 @@
             
         </section>
     </div>
-   <div class="hero-footer">
+
+   <!-- Footer Hero (Muncul Paling Akhir) -->
+   <div class="hero-footer animate-hero delay-4">
     <div class="footer-content-wrapper">
-        <!-- Blok Kiri: Teks Deskripsi -->
         <div class="footer-text-left">
             {{ if .Content }}
                 {{ .Content }}
@@ -39,7 +43,6 @@
             {{ end }}
         </div>
         
-        <!-- Blok Kanan: Tombol -->
         <div class="footer-btn-right">
             <a href="{{ "#jadwal" | relURL }}" class="all-works-btn">See all information</a>
         </div>
