@@ -1,0 +1,9 @@
+{{ define "main" }}
+    {{ partial "hero-header.html" . }}
+    
+    {{ with .Site.GetPage "jadwal.md" }}
+        {{ partial "split-section.html" . }}
+    {{ else }}
+        {{ partial "split-section.html" . }}
+    {{ end }}
+{{ end }}

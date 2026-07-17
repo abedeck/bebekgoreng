@@ -1,0 +1,57 @@
+<section class="split-section" id="jadwal">
+    <div class="split-container">
+        
+        <div class="split-text-col">
+            
+            <div class="meta-header">
+                <span class="meta-brand">{{ .Params.split_brand | default "AMOMENTO" }}</span>
+                <span class="meta-season">{{ .Params.split_season | default "19 S/S" }}</span>
+            </div>
+            
+            <div class="meta-grid">
+                <div class="meta-group">
+                    <span class="meta-label">Best of the Day</span>
+                     <p class="meta-value">
+                        {{ .Params.split_mission | default "SEPTEMBER 15-17,<br>2018" | safeHTML }}
+                    </p>
+                </div>
+                
+                <div class="meta-group">
+                    <span class="meta-label">Jadwal Ibadah</span>
+                   
+                    {{ range .Params.jadwal_list }}
+        <p class="meta-value">
+            <strong>{{ .split_jadwal_title }}</strong><br>
+            {{ .split_jadwal_jam }}
+        </p>
+        <p class="meta-address">
+            {{ .split_keteragan | safeHTML }}
+        </p>
+        <!-- Tambahkan pembatas antar jadwal jika perlu, atau sesuaikan dengan CSS kamu -->
+        <br> 
+        {{ end }}
+                </div>
+            </div>
+            
+            <div class="meta-footer">
+                <span class="meta-label">Contact</span>
+                <p class="meta-value">
+                    {{ .Params.split_contact_name | default "MR. LEE" }}<br>
+                    {{ .Params.split_contact_phone | default "+82 (0)10 9489 9371" }}<br>
+                    {{ .Params.split_contact_email | default "INFO@AMOMENTO.CO" }}<br>
+                    <a href="{{ .Params.split_contact_url | default "#" }}" class="meta-link">
+                        {{ .Params.split_contact_web | default "WWW.AMOMENTO.CO" }}
+                    </a>
+                </p>
+            </div>
+            
+        </div>
+        
+        <div class="split-image-col">
+            <div class="split-img-wrapper">
+                <img src="{{ .Params.split_image | default "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?q=80&w=800" | relURL }}" alt="Editorial Portrait">
+            </div>
+        </div>
+
+    </div>
+</section>

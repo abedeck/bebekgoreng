@@ -1,0 +1,48 @@
+<main class="hero-container">
+    <div class="gallery-wrapper">
+        <section class="gallery-grid">
+            
+            <div class="gallery-item item-side item-bw">
+                <div class="img-wrapper">
+                    <img src="{{ .Params.image_left | default "https://images.unsplash.com/photo-1513694203232-719a280e022f?q=80&w=600" | relURL }}" alt="{{ .Params.caption_left | default "Riverside Quarters" }}">
+                </div>
+                <div class="item-caption caption-left">{{ .Params.caption_left | default "Riverside Quarters" }}</div>
+            </div>
+
+            <div class="gallery-item item-main item-color">
+                <div class="img-wrapper">
+                    <img src="{{ .Params.image_center | default "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=600" | relURL }}" alt="Modern Architecture">
+                </div>
+                <div class="item-caption caption-main">
+                    <span class="cap-title">{{ .Params.caption_left | default "Coastal Haven" }}</span>
+                    <span class="cap-loc">{{ .Params.caption_right | default "Perth, WA, Australia" }}</span>
+                </div>
+            </div>
+
+            <div class="gallery-item item-side item-bw">
+                <div class="img-wrapper">
+                    <img src="{{ .Params.image_right | default "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?q=80&w=600" | relURL }}" alt="{{ .Params.caption_right | default "California, USA" }}">
+                </div>
+                <div class="item-caption caption-right">{{ .Params.caption_right | default "California, USA" }}</div>
+            </div>
+            
+        </section>
+    </div>
+   <div class="hero-footer">
+    <div class="footer-content-wrapper">
+        <!-- Blok Kiri: Teks Deskripsi -->
+        <div class="footer-text-left">
+            {{ if .Content }}
+                {{ .Content }}
+            {{ else }}
+                <p>We create modern interiors and architectural solutions for a comfortable life.</p>
+            {{ end }}
+        </div>
+        
+        <!-- Blok Kanan: Tombol -->
+        <div class="footer-btn-right">
+            <a href="{{ "#jadwal" | relURL }}" class="all-works-btn">See all information</a>
+        </div>
+    </div>
+</div>
+</main>
