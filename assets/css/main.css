@@ -275,7 +275,7 @@ a {
         padding-top: 60px !important; /* Dari 80px dikurangi jadi 60px */
     }
     .split-section {
-        padding: 40px 4% !important; /* Dari 95px dipangkas jadi 40px saja agar lebih naik */
+        padding: 45px 4% !important; /* Dari 95px dipangkas jadi 40px saja agar lebih naik */
     }
     .hero-container {
         height: auto !important; /* Membebaskan tinggi kontainer agar mengikuti panjang teks */
