@@ -44,7 +44,24 @@
                     </a>
                 </p>
             </div>
-            
+            <!-- === RECENT NEWS === -->
+            {{ $recentPosts := where site.RegularPages "Section" "posts" }}
+            {{ $recentPosts = $recentPosts.ByDate.Reverse | first 3 }}
+            {{ with $recentPosts }}
+            <div class="meta-recent-news">
+                <span class="meta-label">Recent News</span>
+                <ul class="recent-news-list">
+                    {{ range . }}
+                    <li class="recent-news-item">
+                        <a href="{{ .RelPermalink }}" class="recent-news-link">
+                            <span class="recent-news-title">{{ .Title }}</span>
+                            <span class="recent-news-date">{{ .Date.Format "2 Jan 2006" }}</span>
+                        </a>
+                    </li>
+                    {{ end }}
+                </ul>
+            </div>
+            {{ end }}
         </div>
         
         <div class="split-image-col">
