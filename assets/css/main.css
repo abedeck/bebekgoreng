@@ -272,7 +272,7 @@ a {
     .nav-right { display: none; }
     .menu-toggle { display: flex; }
     body > main {
-        padding-top: 25px !important; /* Dari 80px dikurangi jadi 60px */
+        padding-top: 45px !important; /* Dari 80px dikurangi jadi 60px */
     }
     .split-section {
         padding: 40px 4% !important; /* Dari 95px dipangkas jadi 40px saja agar lebih naik */
