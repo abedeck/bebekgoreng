@@ -822,3 +822,38 @@ a {
     color: #999;
     margin-top: 0.1rem;
 }
+/* Responsive untuk layar Mobile (HP) */
+@media screen and (max-width: 768px) {
+    /* Mengubah grid menjadi flexbox vertikal */
+    .meta-grid, 
+    .meta-grid-bottom {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 2rem !important;
+    }
+
+    /* TRIK TUKAR POSISI DI MOBILE */
+    .group-news {
+        order: 1 !important; /* Naik ke atas */
+    }
+    
+    .group-contact {
+        order: 2 !important; /* Turun ke bawah Recent News */
+    }
+
+    /* Penyesuaian agar text penuh dan tidak terpotong */
+    .split-text-col {
+        padding: 1.5rem !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
+    }
+
+    .recent-news-list,
+    .recent-news-link {
+        width: 100% !important;
+    }
+    
+    .recent-news-text {
+        flex-grow: 1 !important;
+    }
+}

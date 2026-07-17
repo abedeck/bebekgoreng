@@ -35,7 +35,7 @@
             </div>
             
            <div class="meta-grid meta-grid-bottom">
-                <div class="meta-group">
+                <div class="meta-group group-contact">
                     <span class="meta-label">Contact</span>
                     <p class="meta-value">
                         {{ .Params.split_contact_name | default "MR. LEE" }}<br>
@@ -50,7 +50,7 @@
                {{ $recentPosts := where site.RegularPages "Section" "post" }}
                 {{ $recentPosts = $recentPosts.ByDate.Reverse | first 1 }}
                 {{ with $recentPosts }}
-                <div class="meta-group">
+                <div class="meta-group group-news">
                     <span class="meta-label">Recent News</span>
                     <ul class="recent-news-list">
                         {{ range . }}
