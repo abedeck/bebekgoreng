@@ -6,8 +6,12 @@
     padding: 0;
     box-sizing: border-box;
 }
-
+/* Tambahkan scroll-behavior di sini */
+html {
+    scroll-behavior: smooth;
+}
 html, body {
+    
     min-height: 100vh;
     background-color: #f5f5f5;
     color: #000000;
