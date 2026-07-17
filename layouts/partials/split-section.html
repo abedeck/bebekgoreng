@@ -32,11 +32,25 @@
         {{ end }}
                 </div>
                 
-                <!-- === RECENT NEWS === -->
+            </div>
+            
+           <div class="meta-grid meta-grid-bottom">
+                <div class="meta-group">
+                    <span class="meta-label">Contact</span>
+                    <p class="meta-value">
+                        {{ .Params.split_contact_name | default "MR. LEE" }}<br>
+                        {{ .Params.split_contact_phone | default "+82 (0)10 9489 9371" }}<br>
+                        {{ .Params.split_contact_email | default "INFO@AMOMENTO.CO" }}<br>
+                        <a href="{{ .Params.split_contact_url | default "#" }}" class="meta-link">
+                            {{ .Params.split_contact_web | default "WWW.AMOMENTO.CO" }}
+                        </a>
+                    </p>
+                </div>
+
                 {{ $recentPosts := where site.RegularPages "Section" "post" }}
                 {{ $recentPosts = $recentPosts.ByDate.Reverse | first 1 }}
                 {{ with $recentPosts }}
-                <div class="meta-group meta-group-full">
+                <div class="meta-group">
                     <span class="meta-label">Recent News</span>
                     <ul class="recent-news-list">
                         {{ range . }}
@@ -50,18 +64,6 @@
                     </ul>
                 </div>
                 {{ end }}
-            </div>
-            
-            <div class="meta-footer">
-                <span class="meta-label">Contact</span>
-                <p class="meta-value">
-                    {{ .Params.split_contact_name | default "MR. LEE" }}<br>
-                    {{ .Params.split_contact_phone | default "+82 (0)10 9489 9371" }}<br>
-                    {{ .Params.split_contact_email | default "INFO@AMOMENTO.CO" }}<br>
-                    <a href="{{ .Params.split_contact_url | default "#" }}" class="meta-link">
-                        {{ .Params.split_contact_web | default "WWW.AMOMENTO.CO" }}
-                    </a>
-                </p>
             </div>
          
         </div>

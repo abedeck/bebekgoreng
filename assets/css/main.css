@@ -738,9 +738,8 @@ a {
 }
 
 /* news */
-.meta-group-full {
-    grid-column: 1 / -1;
-    margin-top: 0.5rem;
+.meta-grid-bottom {
+    margin-top: 2.5rem;
 }
 
 .recent-news-list {
@@ -750,21 +749,21 @@ a {
 }
 
 .recent-news-item {
-    padding: 0.6rem 0;
+    padding: 0.5rem 0;
     border-top: 1px solid #e5e5e5;
 }
 
 .recent-news-item:first-child {
     border-top: none;
+    padding-top: 0;
 }
 
 .recent-news-link {
     text-decoration: none;
     color: inherit;
     display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    gap: 1rem;
+    flex-direction: column;
+    gap: 0.15rem;
 }
 
 .recent-news-title {
@@ -781,5 +780,4 @@ a {
 .recent-news-date {
     font-size: 0.7rem;
     color: #999;
-    white-space: nowrap;
 }
