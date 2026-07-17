@@ -272,7 +272,7 @@ a {
     .nav-right { display: none; }
     .menu-toggle { display: flex; }
     body > main {
-        padding-top: 45px !important; /* Dari 80px dikurangi jadi 60px */
+        padding-top: 60px !important; /* Dari 80px dikurangi jadi 60px */
     }
     .split-section {
         padding: 40px 4% !important; /* Dari 95px dipangkas jadi 40px saja agar lebih naik */
@@ -280,7 +280,7 @@ a {
     .hero-container {
         height: auto !important; /* Membebaskan tinggi kontainer agar mengikuti panjang teks */
         min-height: min-content;
-        padding-bottom: 25px !important; /* Memberikan ruang napas di bawah deskripsi */
+        padding-bottom: 30px !important; /* Memberikan ruang napas di bawah deskripsi */
     }
 
     .gallery-wrapper {
