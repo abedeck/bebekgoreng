@@ -1,9 +1,13 @@
-{{- with resources.Get "css/main.css" }}
+{{- $css := resources.Get "css/main.css" }}
+{{- if $css }}
   {{- if eq hugo.Environment "development" }}
-    <link rel="stylesheet" href="{{ .RelPermalink }}">
+    <link rel="stylesheet" href="{{ $css.RelPermalink }}">
   {{- else }}
-    {{- with . | minify | fingerprint }}
+    {{- with $css | minify | fingerprint }}
       <link rel="stylesheet" href="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}" crossorigin="anonymous">
     {{- end }}
   {{- end }}
+{{- else }}
+  <!-- DEBUG: css/main.css tidak ditemukan di folder assets/ -->
+  <link rel="stylesheet" href="{{ "css/main.css" | relURL }}">
 {{- end }}
