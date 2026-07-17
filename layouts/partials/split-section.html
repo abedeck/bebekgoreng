@@ -49,17 +49,7 @@
         
         <div class="split-image-col">
             <div class="split-img-wrapper">
-                {{- $imgPath := .Params.split_image | default "images/placeholder.jpg" }}
-{{- with resources.Get $imgPath }}
-    {{- $resized := .Resize "1200x q85" }}
-    <img src="{{ $resized.RelPermalink }}" 
-         width="{{ $resized.Width }}" 
-         height="{{ $resized.Height }}"
-         alt="Editorial Portrait" 
-         loading="lazy">
-{{- else }}
-    <!-- DEBUG: gambar tidak ditemukan di assets/{{ $imgPath }} -->
-{{- end }}
+               <img src="{{ .Params.split_image | default "images/lookbook1.jpg" | relURL }}" alt="Editorial Portrait">
             </div>
         </div>
 
