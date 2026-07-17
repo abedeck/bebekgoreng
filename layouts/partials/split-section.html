@@ -47,8 +47,8 @@
                     </p>
                 </div>
 
-                {{ $recentPosts := where site.RegularPages "Section" "post" }}
-                {{ $recentPosts = $recentPosts.ByDate.Reverse | first 1 }}
+               {{ $recentPosts := where site.RegularPages "Section" "posts" }}
+                {{ $recentPosts = $recentPosts.ByDate.Reverse | first 3 }}
                 {{ with $recentPosts }}
                 <div class="meta-group">
                     <span class="meta-label">Recent News</span>
@@ -56,8 +56,26 @@
                         {{ range . }}
                         <li class="recent-news-item">
                             <a href="{{ .RelPermalink }}" class="recent-news-link">
-                                <span class="recent-news-title">{{ .Title }}</span>
-                                <span class="recent-news-date">{{ .Date.Format "2 Jan 2006" }}</span>
+                                
+                                <div class="recent-news-thumb">
+                                    {{ $thumb := .Resources.GetMatch "cover.*" }}
+                                    {{ if not $thumb }}
+                                        {{ $thumb = .Resources.ByType "image" | first 1 }}
+                                        {{ if $thumb }}{{ $thumb = index $thumb 0 }}{{ end }}
+                                    {{ end }}
+                                    {{ if $thumb }}
+                                        <img src="{{ $thumb.RelPermalink }}" alt="{{ .Title }}">
+                                    {{ else }}
+                                        <div class="recent-news-thumb-placeholder"></div>
+                                    {{ end }}
+                                </div>
+
+                                <div class="recent-news-text">
+                                    <span class="recent-news-title">{{ .Title }}</span>
+                                    <span class="recent-news-desc">{{ .Summary | plainify | truncate 80 }}</span>
+                                    <span class="recent-news-date">{{ .Date.Format "2 Jan 2006" }}</span>
+                                </div>
+
                             </a>
                         </li>
                         {{ end }}
