@@ -869,25 +869,23 @@ a {
 }
 
 /* ANIMASI  */
-/* --- Definisi Cetakan Animasi Fade In --- */
-@keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(20px); /* Muncul dari bawah agak ke atas */
-    }
+/* --- 1. Pengaturan Awal Efek Animasi --- */
+.animate-hero {
+    opacity: 0;
+    transform: translateY(25px); /* Posisi awal sedikit turun ke bawah */
+    animation: heroFadeIn 1.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* --- 2. Timeline Gerakan (Keyframes) --- */
+@keyframes heroFadeIn {
     to {
         opacity: 1;
-        transform: translateY(0);
+        transform: translateY(0); /* Kembali ke posisi semula sambil memudar pas */
     }
 }
 
-/* --- Class untuk Dipasang di HTML --- */
-.animate-fade-in {
-    opacity: 0; /* Sembunyikan dulu sebelum animasi jalan */
-    animation: fadeInUp 1.2s cubic-bezier(0.25, 1, 0.5, 1) forwards;
-}
-
-/* Opsional: Berikan jeda waktu (delay) agar muncul bergantian */
-.delay-1 { animation-delay: 0.2s; }
-.delay-2 { animation-delay: 0.4s; }
-.delay-3 { animation-delay: 0.6s; }
+/* --- 3. Pengatur Jeda Waktu Berurutan (Stagger Delay) --- */
+.delay-1 { animation-delay: 0.1s; } /* Gambar kiri */
+.delay-2 { animation-delay: 0.25s; } /* Gambar tengah */
+.delay-3 { animation-delay: 0.4s; } /* Gambar kanan */
+.delay-4 { animation-delay: 0.6s; } /* Teks footer bawah */
