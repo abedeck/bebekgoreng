@@ -738,16 +738,9 @@ a {
 }
 
 /* news */
-.meta-bottom-row {
-    display: flex;
-    gap: 2.5rem;
-    margin-top: 2rem;
-}
-
-.meta-footer,
-.meta-recent-news {
-    flex: 1;
-    min-width: 0;
+.meta-group-full {
+    grid-column: 1 / -1;
+    margin-top: 0.5rem;
 }
 
 .recent-news-list {
@@ -769,8 +762,9 @@ a {
     text-decoration: none;
     color: inherit;
     display: flex;
-    flex-direction: column;
-    gap: 0.15rem;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 1rem;
 }
 
 .recent-news-title {
@@ -787,12 +781,5 @@ a {
 .recent-news-date {
     font-size: 0.7rem;
     color: #999;
-}
-
-/* Mobile — balik jadi ditumpuk kalau layar sempit */
-@media (max-width: 600px) {
-    .meta-bottom-row {
-        flex-direction: column;
-        gap: 1.5rem;
-    }
+    white-space: nowrap;
 }
