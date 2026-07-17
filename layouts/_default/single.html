@@ -1,15 +1,64 @@
 {{ define "main" }}
   <article class="post-single">
-    <h1>{{ .Title }}</h1>
 
-    {{ $dateMachine := .Date | time.Format "2006-01-02T15:04:05-07:00" }}
-    {{ $dateHuman := .Date | time.Format ":date_long" }}
-    <time datetime="{{ $dateMachine }}">{{ $dateHuman }}</time>
+    {{ with .Params.cover }}
+      <div class="post-cover">
+        {{ with $.Resources.GetMatch (printf "*%s*" (path.Base .)) }}
+          <img src="{{ .RelPermalink }}" alt="{{ $.Title }}">
+        {{ else }}
+          <img src="{{ . | $.RelPermalink }}" alt="{{ $.Title }}">
+        {{ end }}
+      </div>
+    {{ end }}
+
+    <header class="post-header">
+      {{ with .Params.category }}
+        <span class="post-category">{{ . }}</span>
+      {{ end }}
+
+      <h1 class="post-title">{{ .Title }}</h1>
+
+      <div class="post-meta">
+        {{ $dateMachine := .Date | time.Format "2006-01-02T15:04:05-07:00" }}
+        {{ $dateHuman := .Date | time.Format ":date_long" }}
+        <time datetime="{{ $dateMachine }}">{{ $dateHuman }}</time>
+
+        {{ if .Params.author }}
+          <span class="post-meta-separator">·</span>
+          <span class="post-author">{{ .Params.author }}</span>
+        {{ end }}
+
+        {{ if .ReadingTime }}
+          <span class="post-meta-separator">·</span>
+          <span class="post-reading-time">{{ .ReadingTime }} menit baca</span>
+        {{ end }}
+      </div>
+    </header>
 
     <div class="post-content">
       {{ .Content }}
     </div>
 
-    {{ partial "terms.html" (dict "taxonomy" "tags" "page" .) }}
+    {{ with .Params.tags }}
+      <div class="post-tags">
+        {{ partial "terms.html" (dict "taxonomy" "tags" "page" $) }}
+      </div>
+    {{ end }}
+
+    <nav class="post-nav">
+      {{ with .PrevInSection }}
+        <a class="post-nav-prev" href="{{ .RelPermalink }}">
+          <span class="post-nav-label">&larr; Sebelumnya</span>
+          <span class="post-nav-title">{{ .Title }}</span>
+        </a>
+      {{ end }}
+      {{ with .NextInSection }}
+        <a class="post-nav-next" href="{{ .RelPermalink }}">
+          <span class="post-nav-label">Selanjutnya &rarr;</span>
+          <span class="post-nav-title">{{ .Title }}</span>
+        </a>
+      {{ end }}
+    </nav>
+
   </article>
 {{ end }}
