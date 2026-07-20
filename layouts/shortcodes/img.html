@@ -1,0 +1,26 @@
+{{/* Mengambil nama file gambar dari parameter shortcode */}}
+{{ $src := .Get "src" }}
+{{ $alt := .Get "alt" | default "Gambar Artikel" }}
+
+{{/* Mencari gambar di dalam folder artikel saat ini */}}
+{{ $image := .Page.Resources.GetMatch $src }}
+
+{{ if $image }}
+  {{/* SCRIPT AJAIB HUGO: Resize lebar maks 1200px, konversi ke WebP, kualitas 80% */}}
+  {{ $processed := $image.Resize "1200x webp q80" }}
+  
+  <figure class="post-image-container">
+    <img 
+      src="{{ $processed.RelPermalink }}" 
+      width="{{ $processed.Width }}" 
+      height="{{ $processed.Height }}" 
+      alt="{{ $alt }}"
+      loading="lazy">
+    {{ with .Get "caption" }}
+      <figcaption>{{ . }}</figcaption>
+    {{ end }}
+  </figure>
+{{ else }}
+  {{/* Fallback jika gambar ditaruh di folder static/ biasa */}}
+  <img src="{{ $src | relURL }}" alt="{{ $alt }}" loading="lazy">
+{{ end }}
