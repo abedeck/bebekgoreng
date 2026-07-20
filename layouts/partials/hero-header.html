@@ -2,32 +2,46 @@
     <div class="gallery-wrapper">
         <section class="gallery-grid">
             
-            <!-- Gambar Kiri (Muncul Pertama) -->
-            <div class="gallery-item item-side item-bw animate-hero delay-1">
-                <div class="img-wrapper">
-                    <img src="{{ .Params.image_left | default "https://images.unsplash.com/photo-1513694203232-719a280e022f?q=80&w=600" | relURL }}" alt="{{ .Params.caption_left | default "Riverside Quarters" }}">
-                </div>
-                <div class="item-caption caption-left">{{ .Params.caption_left | default "Riverside Quarters" }}</div>
-            </div>
+          <!-- Gambar Kiri (Muncul Pertama) -->
+<div class="gallery-item item-side item-bw animate-hero delay-1">
+    <div class="img-wrapper">
+        {{ $imgLeft := .Params.image_left | default site.Params.media.default_image }}
+        {{ $capLeft := .Params.caption_left | default site.Params.media.default_caption }}
+        <img src="{{ if hasPrefix $imgLeft "http" }}{{ $imgLeft }}{{ else }}{{ $imgLeft | relURL }}{{ end }}" 
+             alt="{{ $capLeft }}">
+    </div>
+    <div class="item-caption caption-left">
+        {{ $capLeft }}
+    </div>
+</div>
 
-            <!-- Gambar Tengah / Utama (Muncul Kedua) -->
-            <div class="gallery-item item-main item-color animate-hero delay-2">
-                <div class="img-wrapper">
-                    <img src="{{ .Params.image_center | default "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=600" | relURL }}" alt="Modern Architecture">
-                </div>
-                <div class="item-caption caption-main">
-                    <span class="cap-title">{{ .Params.caption_left | default "Coastal Haven" }}</span>
-                    <span class="cap-loc">{{ .Params.caption_right | default "Perth, WA, Australia" }}</span>
-                </div>
-            </div>
+<!-- Gambar Tengah / Utama (Muncul Kedua) -->
+<div class="gallery-item item-main item-color animate-hero delay-2">
+    <div class="img-wrapper">
+        {{ $imgCenter := .Params.image_center | default "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=600" }}
+        {{ $capCenterTitle := .Params.caption_center_title | default "Coastal Haven" }}
+        {{ $capCenterLoc   := .Params.caption_center_loc   | default "Perth, WA, Australia" }}
+        <img src="{{ if hasPrefix $imgCenter "http" }}{{ $imgCenter }}{{ else }}{{ $imgCenter | relURL }}{{ end }}" 
+             alt="{{ $capCenterTitle }}">
+    </div>
+    <div class="item-caption caption-main">
+        <span class="cap-title">{{ $capCenterTitle }}</span>
+        <span class="cap-loc">{{ $capCenterLoc }}</span>
+    </div>
+</div>
 
-            <!-- Gambar Kanan (Muncul Ketiga) -->
-            <div class="gallery-item item-side item-bw animate-hero delay-3">
-                <div class="img-wrapper">
-                    <img src="{{ .Params.image_right | default "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?q=80&w=600" | relURL }}" alt="{{ .Params.caption_right | default "California, USA" }}">
-                </div>
-                <div class="item-caption caption-right">{{ .Params.caption_right | default "California, USA" }}</div>
-            </div>
+<!-- Gambar Kanan (Muncul Ketiga) -->
+<div class="gallery-item item-side item-bw animate-hero delay-3">
+    <div class="img-wrapper">
+        {{ $imgRight := .Params.image_right | default "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?q=80&w=600" }}
+        {{ $capRight := .Params.caption_right | default "California, USA" }}
+        <img src="{{ if hasPrefix $imgRight "http" }}{{ $imgRight }}{{ else }}{{ $imgRight | relURL }}{{ end }}" 
+             alt="{{ $capRight }}">
+    </div>
+    <div class="item-caption caption-right">
+        {{ $capRight }}
+    </div>
+</div>
             
         </section>
     </div>
