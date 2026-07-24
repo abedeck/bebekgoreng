@@ -1,12 +1,27 @@
 {{ $src := .Get "src" | default (.Get 0) }}
 {{ $size := .Get "size" | default "normal" }}
 {{ $alt := .Get "alt" | default "Foto Galeri" }}
+{{ $finalImg := $src }}
+
+{{/* Cek apakah gambar berasal dari upload lokal (Page Bundle / Assets) */}}
+{{ $imgResource := .Page.Resources.GetMatch $src }}
+{{ if not $imgResource }}
+  {{ $imgResource = resources.Get $src }}
+{{ end }}
+
+{{/* Jika file gambar ditemukan di lokal, lakukan konversi otomatis ke WebP & Resize */}}
+{{ if $imgResource }}
+  {{/* Resize & Convert ke WebP dengan kualitas 80% */}}
+  {{ $converted := $imgResource.Resize "1000x webp q80" }}
+  {{ $finalImg = $converted.RelPermalink }}
+{{ end }}
 
 <div class="bento-item bento-{{ $size }}">
   <img 
-    src="{{ $src }}" 
+    src="{{ $finalImg }}" 
     alt="{{ $alt }}" 
     loading="lazy" 
+    decoding="async"
   />
   {{ if .Get "caption" }}
     <span class="bento-caption">{{ .Get "caption" }}</span>
