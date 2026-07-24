@@ -21,29 +21,30 @@
             <!-- Thumbnail Gambar -->
             <div class="card-media">
               
-              {{/* 1. Cari cover.* (Case-insensitive: cover, Cover, COVER) */}}
-              {{ $img := .Resources.GetMatch "*[cC][oO][vV][eE][rR]*" }}
+              {{/* 1. Cek apakah ada file bernama cover.* */}}
+{{ $thumb := .Resources.GetMatch "cover.*" }}
 
-              {{/* 2. Fallback: Cari dari front-matter .Params.image atau folder assets/ */}}
-              {{ if not $img }}
-                {{ $f := .Params.image | default .Params.featured_image }}
-                {{ if $f }}
-                  {{ $img = .Resources.GetMatch $f | default (resources.Get $f) }}
-                {{ end }}
-              {{ end }}
+{{/* 2. Jika tidak ada 'cover.*', ambil gambar pertama APAPUN yang ada di folder artikel */}}
+{{ if not $thumb }}
+  {{ $images := .Resources.ByType "image" }}
+  {{ if gt (len $images) 0 }}
+    {{ $thumb = index $images 0 }}
+  {{ end }}
+{{ end }}
 
-              <!-- RENDER GAMBAR -->
-              {{ if $img }}
-                {{ $webp := $img.Resize "300x300 webp q80" }}
-                <img src="{{ $webp.RelPermalink }}" 
-                     width="{{ $webp.Width }}" 
-                     height="{{ $webp.Height }}" 
-                     alt="{{ .Title }}" 
-                     loading="lazy">
-              {{ else }}
-                {{/* Fallback jika tidak ada gambar sama sekali */}}
-                <img src="{{ "images/default-thumb.jpg" | relURL }}" alt="{{ .Title }}" loading="lazy">
-              {{ end }}
+{{/* 3. Render Gambar */}}
+{{ if $thumb }}
+  {{/* SCRIPT WEBP & RESIZE AUTOMATIC */}}
+  {{ $webp := $thumb.Resize "300x300 webp q80" }}
+  <img src="{{ $webp.RelPermalink }}" 
+       width="{{ $webp.Width }}" 
+       height="{{ $webp.Height }}" 
+       alt="{{ .Title }}" 
+       loading="lazy">
+{{ else }}
+  {{/* Fallback Placeholder jika folder artikel sama sekali tidak punya gambar */}}
+  <div class="recent-news-thumb-placeholder"></div>
+{{ end }}
 
               {{ with .Params.categories }}
                 <span class="category-badge">{{ index . 0 }}</span>
