@@ -3,9 +3,15 @@
 {{ $alt := .Get "alt" | default "Foto Galeri" }}
 {{ $caption := .Get "caption" | default (.Get "alt") }}
 
+{{/* Tambahkan relURL agar path foto lokal terbaca dengan benar oleh Hugo */}}
+{{ $finalSrc := $src }}
+{{ if not (hasPrefix $src "http") }}
+  {{ $finalSrc = $src | relURL }}
+{{ end }}
+
 <div class="bento-item bento-{{ $size }}">
   <img 
-    src="{{ $src }}" 
+    src="{{ $finalSrc }}" 
     alt="{{ $alt }}" 
     loading="lazy" 
     decoding="async"
