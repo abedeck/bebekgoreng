@@ -1,0 +1,22 @@
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const tables = document.querySelectorAll(".content table, article table");
+
+    window.addEventListener("scroll", function () {
+      tables.forEach((table) => {
+        const rect = table.getBoundingClientRect();
+        const windowHeight = window.innerHeight;
+
+        // Cek apakah tabel sedang terlihat di layar
+        if (rect.top < windowHeight && rect.bottom > 0) {
+          // Hitung persentase scroll halaman terhadap posisi tabel
+          const scrollPercent = (windowHeight - rect.top) / (windowHeight + rect.height);
+          
+          // Geser tabel secara horizontal berdasarkan scroll vertical
+          const maxScrollLeft = table.scrollWidth - table.clientWidth;
+          table.scrollLeft = Math.min(maxScrollLeft, Math.max(0, scrollPercent * maxScrollLeft));
+        }
+      });
+    });
+  });
+</script>
