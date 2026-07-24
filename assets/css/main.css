@@ -274,6 +274,10 @@ a {
 
 @media (max-width: 768px) {
     .nav-right { display: none; }
+    .brand-logo {
+        left: 1rem;            /* Geser ke rata kiri (sesuaikan margin/padding yang kamu mau) */
+        transform: translateY(-50%); /* HANYA memosisikan vertikal tengah, horizontalnya rata kiri */
+    }
     .menu-toggle { display: flex; }
     body > main {
         padding-top: 60px !important; /* Dari 80px dikurangi jadi 60px */
