@@ -8,23 +8,31 @@
         const windowHeight = window.innerHeight;
         const middleOfScreen = windowHeight / 2;
 
-        // Cek jika bagian atas tabel SUDAH melewatin/mencapai tengah layar
-        if (rect.top <= middleOfScreen) {
-          // Hitung jarak scroll mulai dari TENGAH layar sampai tabel naik ke atas
-          const startPoint = middleOfScreen;
-          const distanceScrolled = startPoint - rect.top;
-          const totalDistance = rect.height + middleOfScreen;
+        // Hitung kapasitas maksimum scroll horizontal tabel
+        const maxScrollLeft = table.scrollWidth - table.clientWidth;
 
-          // Hitung persentase (0% di tengah layar, naik ke 100% saat di-scroll ke atas)
-          let scrollPercent = distanceScrolled / totalDistance;
-          scrollPercent = Math.min(1, Math.max(0, scrollPercent)); // Batasi 0.0 sampai 1.0
+        // Jika tabel tidak butuh scroll (ukuran konten muat di layar), lewati
+        if (maxScrollLeft <= 0) return;
 
-          // Geser tabel berdasarkan persentase
-          const maxScrollLeft = table.scrollWidth - table.clientWidth;
-          table.scrollLeft = scrollPercent * maxScrollLeft;
-        } else {
-          // Jika tabel masih di bawah tengah layar, kunci posisi di paling kiri
+        // 1. Belum sampai tengah layar: Kunci di posisi paling awal (kiri)
+        if (rect.top > middleOfScreen) {
           table.scrollLeft = 0;
+          return;
+        }
+
+        // 2. Berada di rentang area animasi (dari tengah layar ke atas)
+        // Menentukan seberapa cepat tabel bergeser (sensitivitas scroll)
+        const scrollSensitivity = 1.5; // Ubah angka ini jika ingin gerakannya lebih cepat/lambat
+        const distanceAfterMiddle = middleOfScreen - rect.top;
+        
+        // Hitung posisi geser dalam pixel
+        let targetScrollLeft = distanceAfterMiddle * scrollSensitivity;
+
+        // 3. Kunci di ujung akhir jika sudah mentok kanan
+        if (targetScrollLeft >= maxScrollLeft) {
+          table.scrollLeft = maxScrollLeft; // TERKUNCI di akhir tabel
+        } else {
+          table.scrollLeft = targetScrollLeft; // Bergeser secara mulus
         }
       });
     });
