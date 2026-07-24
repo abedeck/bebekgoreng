@@ -17,54 +17,62 @@
         {{ $paginator := .Paginate .Pages 5 }}
         {{ range $paginator.Pages }}
           
-         <article class="classic-card">
-  <!-- Thumbnail Gambar (Otomatis Mencari cover.* di folder artikel) -->
-  <div class="card-media">
-    
-    {{/* SCRIPT AJAIB: Mencari file apapun bernama cover.* di folder artikel ini */}}
-    {{ $img := .Resources.GetMatch "cover.*" }}
+          <article class="classic-card">
+            <!-- Thumbnail Gambar -->
+            <div class="card-media">
+              
+              {{/* 1. Cari cover.* (Case-insensitive: cover, Cover, COVER) */}}
+              {{ $img := .Resources.GetMatch "*[cC][oO][vV][eE][rR]*" }}
 
-    {{ if $img }}
-      {{/* Jika cover ditemukan -> Resize & Konversi ke WebP */}}
-      {{ $webp := $img.Resize "300x300 webp q80" }}
-      <img src="{{ $webp.RelPermalink }}" 
-           width="{{ $webp.Width }}" 
-           height="{{ $webp.Height }}" 
-           alt="{{ .Title }}" 
-           loading="lazy">
-    {{ else }}
-      {{/* Fallback jika artikel tersebut belum punya gambar cover */}}
-      <img src="{{ "images/default-thumb.jpg" | relURL }}" alt="{{ .Title }}" loading="lazy">
-    {{ end }}
+              {{/* 2. Fallback: Cari dari front-matter .Params.image atau folder assets/ */}}
+              {{ if not $img }}
+                {{ $f := .Params.image | default .Params.featured_image }}
+                {{ if $f }}
+                  {{ $img = .Resources.GetMatch $f | default (resources.Get $f) }}
+                {{ end }}
+              {{ end }}
 
-    {{ with .Params.categories }}
-      <span class="category-badge">{{ index . 0 }}</span>
-    {{ end }}
-  </div>
+              <!-- RENDER GAMBAR -->
+              {{ if $img }}
+                {{ $webp := $img.Resize "300x300 webp q80" }}
+                <img src="{{ $webp.RelPermalink }}" 
+                     width="{{ $webp.Width }}" 
+                     height="{{ $webp.Height }}" 
+                     alt="{{ .Title }}" 
+                     loading="lazy">
+              {{ else }}
+                {{/* Fallback jika tidak ada gambar sama sekali */}}
+                <img src="{{ "images/default-thumb.jpg" | relURL }}" alt="{{ .Title }}" loading="lazy">
+              {{ end }}
 
-  <!-- Konten Teks -->
-  <div class="card-body">
-    <h2 class="card-title">
-      <a href="{{ .RelPermalink }}">{{ .Title }}</a>
-    </h2>
-    
-    <div class="card-meta">
-      <span>By {{ .Params.author | default "Admin" }}</span> • 
-      <time>{{ .Date.Format "September 2, 2006" }}</time>
-    </div>
+              {{ with .Params.categories }}
+                <span class="category-badge">{{ index . 0 }}</span>
+              {{ end }}
+            </div>
 
-    <p class="card-excerpt">
-      {{ .Summary | plainify | truncate 130 }}
-    </p>
+            <!-- Konten Teks -->
+            <div class="card-body">
+              <h2 class="card-title">
+                <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+              </h2>
+              
+              <div class="card-meta">
+                <span>By {{ .Params.author | default "Claira Ananda Putri" }}</span> • 
+                <time>{{ .Date.Format "September 2, 2006" }}</time>
+              </div>
 
-    <a href="{{ .RelPermalink }}" class="view-details-btn">View Details »</a>
-  </div>
-</article>
+              <p class="card-excerpt">
+                {{ .Summary | plainify | truncate 130 }}
+              </p>
+
+              <a href="{{ .RelPermalink }}" class="view-details-btn">View Details »</a>
+            </div>
+          </article>
 
         {{ end }}
       </div>
 
-      <!-- Pagination (1 2 3 4 ->) -->
+      <!-- Pagination -->
       {{ if gt $paginator.TotalPages 1 }}
         <div class="pagination-wrapper">
           {{ template "_internal/pagination.html" . }}
@@ -83,16 +91,23 @@
           {{ range first 5 (where .Site.RegularPages "Type" "in" .Site.Params.mainSections) }}
             <div class="recent-post-item">
               <div class="recent-thumb">
-                {{ $f := .Params.image | default .Params.featured_image }}
-                {{ if $f }}
-                  {{ $img := .Page.Resources.GetMatch $f | default (resources.Get $f) }}
-                  {{ if $img }}
-                    {{ $w := $img.Resize "120x120 webp q75" }}
-                    <img src="{{ $w.RelPermalink }}" alt="{{ .Title }}" loading="lazy">
-                  {{ else }}
-                    <img src="{{ $f | relURL }}" alt="{{ .Title }}" loading="lazy">
+                
+                {{/* Ambil gambar cover untuk sidebar */}}
+                {{ $sideImg := .Resources.GetMatch "*[cC][oO][vV][eE][rR]*" }}
+                {{ if not $sideImg }}
+                  {{ $f := .Params.image | default .Params.featured_image }}
+                  {{ if $f }}
+                    {{ $sideImg = .Resources.GetMatch $f | default (resources.Get $f) }}
                   {{ end }}
                 {{ end }}
+
+                {{ if $sideImg }}
+                  {{ $w := $sideImg.Resize "120x120 webp q75" }}
+                  <img src="{{ $w.RelPermalink }}" alt="{{ .Title }}" loading="lazy">
+                {{ else }}
+                  <img src="{{ "images/default-thumb.jpg" | relURL }}" alt="{{ .Title }}" loading="lazy">
+                {{ end }}
+
               </div>
               <div class="recent-info">
                 <h4><a href="{{ .RelPermalink }}">{{ .Title }}</a></h4>
@@ -116,21 +131,23 @@
         </ul>
       </div>
 
-      <!-- Widget 3: Recent Projects / Photo Grid -->
+      <!-- Widget 3: Recent Projects Grid -->
       <div class="widget widget-projects">
         <h3 class="widget-title">Recent Projects</h3>
         <div class="projects-grid">
           {{ range first 6 .Site.RegularPages }}
-            {{ $f := .Params.image | default .Params.featured_image }}
-            {{ if $f }}
+            {{ $pImg := .Resources.GetMatch "*[cC][oO][vV][eE][rR]*" }}
+            {{ if not $pImg }}
+              {{ $f := .Params.image | default .Params.featured_image }}
+              {{ if $f }}
+                {{ $pImg = .Resources.GetMatch $f | default (resources.Get $f) }}
+              {{ end }}
+            {{ end }}
+
+            {{ if $pImg }}
               <a href="{{ .RelPermalink }}" class="project-grid-item">
-                {{ $img := .Page.Resources.GetMatch $f | default (resources.Get $f) }}
-                {{ if $img }}
-                  {{ $w := $img.Resize "150x150 webp q75" }}
-                  <img src="{{ $w.RelPermalink }}" alt="{{ .Title }}" loading="lazy">
-                {{ else }}
-                  <img src="{{ $f | relURL }}" alt="{{ .Title }}" loading="lazy">
-                {{ end }}
+                {{ $w := $pImg.Resize "150x150 webp q75" }}
+                <img src="{{ $w.RelPermalink }}" alt="{{ .Title }}" loading="lazy">
               </a>
             {{ end }}
           {{ end }}
