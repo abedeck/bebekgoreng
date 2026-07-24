@@ -1153,3 +1153,32 @@ a {
     height: 200px;
   }
 }
+
+/* Styling Tabel Markdown Hugo */
+.content table,
+article table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5rem 0;
+}
+
+.content table th,
+.content table td,
+article table th,
+article table td {
+  border: 1px solid #e2e8f0; /* Garis tepi tipis abu-abu */
+  padding: 10px 14px;        /* Memberikan jarak spasi teks agar tidak mepet */
+  text-align: left;
+}
+
+.content table th,
+article table th {
+  background-color: #f8fafc; /* Warna background header tabel */
+  font-weight: 600;
+}
+
+/* Efek warna selang-seling tiap baris (opsional) */
+.content table tr:nth-child(even),
+article table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
