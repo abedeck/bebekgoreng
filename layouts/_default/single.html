@@ -41,7 +41,7 @@
     {{ if .Params.bento_gallery }}
       <div class="bento-gallery-container">
         {{ range .Params.bento_gallery }}
-          {{ $driveUrl := printf "https://lh3.googleusercontent.com/d/%s" .drive_id }}
+          {{ $driveUrl := printf "https://drive.google.com/uc?export=view&id=%s" .drive_id }}
           <div class="bento-item bento-{{ .size | default "normal" }}">
             <img 
               src="{{ $driveUrl }}" 
