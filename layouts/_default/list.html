@@ -73,31 +73,50 @@
     <aside class="sidebar-area">
       
       <!-- Widget 1: Recent Posts -->
-      <div class="widget widget-recent-posts">
-        <h3 class="widget-title">Recent Posts</h3>
-        <div class="recent-posts-list">
-          {{ range first 5 (where .Site.RegularPages "Type" "in" .Site.Params.mainSections) }}
-            <div class="recent-post-item">
-              <div class="recent-thumb">
-                {{ $f := .Params.image | default .Params.featured_image }}
-                {{ if $f }}
-                  {{ $img := .Page.Resources.GetMatch $f | default (resources.Get $f) }}
-                  {{ if $img }}
-                    {{ $w := $img.Resize "120x120 webp q75" }}
-                    <img src="{{ $w.RelPermalink }}" alt="{{ .Title }}" loading="lazy">
-                  {{ else }}
-                    <img src="{{ $f | relURL }}" alt="{{ .Title }}" loading="lazy">
-                  {{ end }}
-                {{ end }}
-              </div>
-              <div class="recent-info">
-                <h4><a href="{{ .RelPermalink }}">{{ .Title }}</a></h4>
-                <time>{{ .Date.Format "Sep 2, 2006" }}</time>
-              </div>
-            </div>
+<div class="widget widget-recent-posts">
+  <h3 class="widget-title">Recent Posts</h3>
+  <div class="recent-posts-list">
+    {{ range first 5 (where .Site.RegularPages "Type" "in" .Site.Params.mainSections) }}
+      <div class="recent-post-item">
+        <div class="recent-thumb">
+          
+          {{/* 1. Ambil nilai dari front matter .md (image atau featured_image) */}}
+          {{ $f := .Params.image | default .Params.featured_image }}
+          {{ $img := "" }}
+
+          {{/* 2. Cari filenya di folder artikel saat ini */}}
+          {{ if $f }}
+            {{ $img = .Resources.GetMatch $f | default (resources.Get $f) }}
           {{ end }}
+
+          {{/* 3. Jika front matter kosong/tidak ketemu, cari file cover.* atau gambar pertama */}}
+          {{ if not $img }}
+            {{ $img = .Resources.GetMatch "cover.*" }}
+            {{ if not $img }}
+              {{ $images := .Resources.ByType "image" }}
+              {{ if gt (len $images) 0 }}
+                {{ $img = index $images 0 }}
+              {{ end }}
+            {{ end }}
+          {{ end }}
+
+          {{/* 4. Render Gambar */}}
+          {{ if $img }}
+            {{ $w := $img.Resize "120x120 webp q75" }}
+            <img src="{{ $w.RelPermalink }}" width="{{ $w.Width }}" height="{{ $w.Height }}" alt="{{ .Title }}" loading="lazy">
+          {{ else }}
+            <div class="recent-news-thumb-placeholder"></div>
+          {{ end }}
+
+        </div>
+        <div class="recent-info">
+          <h4><a href="{{ .RelPermalink }}">{{ .Title }}</a></h4>
+          <time>{{ .Date.Format "Sep 2, 2006" }}</time>
         </div>
       </div>
+    {{ end }}
+  </div>
+</div>
 
       <!-- Widget 2: Blog Categories -->
       <div class="widget widget-categories">
