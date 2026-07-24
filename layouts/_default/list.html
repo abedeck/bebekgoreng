@@ -1,8 +1,140 @@
 {{ define "main" }}
-  <h1>{{ .Title }}</h1>
-  {{ .Content }}
-  {{ range .Pages }}
-    <h2><a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a></h2>
-    {{ .Summary }}
-  {{ end }}
+<div class="classic-blog-container">
+
+  <!-- Header Breadcrumb & Judul -->
+  <div class="blog-header-section">
+    <h1 class="page-title">{{ .Title | default "Blog List – Classic" }}</h1>
+    <nav class="breadcrumb">
+      <a href="{{ .Site.BaseURL }}">Home</a> / <span>Blog</span>
+    </nav>
+  </div>
+
+  <div class="blog-layout-grid">
+    
+    <!-- KOLOM KIRI: DAFTAR ARTIKEL -->
+    <main class="main-content-area">
+      <div class="post-list-classic">
+        {{ $paginator := .Paginate .Pages 5 }}
+        {{ range $paginator.Pages }}
+          
+          <article class="classic-card">
+            <!-- Thumbnail Gambar + Badge Kategori -->
+            <div class="card-media">
+              {{ $featured := .Params.image | default .Params.featured_image }}
+              {{ if $featured }}
+                {{ $img := .Page.Resources.GetMatch $featured | default (resources.Get $featured) }}
+                {{ if $img }}
+                  {{ $webp := $img.Resize "300x300 webp q80" }}
+                  <img src="{{ $webp.RelPermalink }}" width="{{ $webp.Width }}" height="{{ $webp.Height }}" alt="{{ .Title }}" loading="lazy">
+                {{ else }}
+                  <img src="{{ if hasPrefix $featured "http" }}{{ $featured }}{{ else }}{{ $featured | relURL }}{{ end }}" alt="{{ .Title }}" loading="lazy">
+                {{ end }}
+              {{ else }}
+                <img src="{{ "images/default-thumb.jpg" | relURL }}" alt="{{ .Title }}" loading="lazy">
+              {{ end }}
+
+              {{ with .Params.categories }}
+                <span class="category-badge">{{ index . 0 }}</span>
+              {{ end }}
+            </div>
+
+            <!-- Konten Teks -->
+            <div class="card-body">
+              <h2 class="card-title">
+                <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+              </h2>
+              
+              <div class="card-meta">
+                <span>By {{ .Params.author | default "Admin" }}</span> • 
+                <time>{{ .Date.Format "September 2, 2006" }}</time>
+              </div>
+
+              <p class="card-excerpt">
+                {{ .Summary | plainify | truncate 130 }}
+              </p>
+
+              <a href="{{ .RelPermalink }}" class="view-details-btn">View Details »</a>
+            </div>
+          </article>
+
+        {{ end }}
+      </div>
+
+      <!-- Pagination (1 2 3 4 ->) -->
+      {{ if gt $paginator.TotalPages 1 }}
+        <div class="pagination-wrapper">
+          {{ template "_internal/pagination.html" . }}
+        </div>
+      {{ end }}
+    </main>
+
+
+    <!-- KOLOM KANAN: SIDEBAR -->
+    <aside class="sidebar-area">
+      
+      <!-- Widget 1: Recent Posts -->
+      <div class="widget widget-recent-posts">
+        <h3 class="widget-title">Recent Posts</h3>
+        <div class="recent-posts-list">
+          {{ range first 5 (where .Site.RegularPages "Type" "in" .Site.Params.mainSections) }}
+            <div class="recent-post-item">
+              <div class="recent-thumb">
+                {{ $f := .Params.image | default .Params.featured_image }}
+                {{ if $f }}
+                  {{ $img := .Page.Resources.GetMatch $f | default (resources.Get $f) }}
+                  {{ if $img }}
+                    {{ $w := $img.Resize "120x120 webp q75" }}
+                    <img src="{{ $w.RelPermalink }}" alt="{{ .Title }}" loading="lazy">
+                  {{ else }}
+                    <img src="{{ $f | relURL }}" alt="{{ .Title }}" loading="lazy">
+                  {{ end }}
+                {{ end }}
+              </div>
+              <div class="recent-info">
+                <h4><a href="{{ .RelPermalink }}">{{ .Title }}</a></h4>
+                <time>{{ .Date.Format "Sep 2, 2006" }}</time>
+              </div>
+            </div>
+          {{ end }}
+        </div>
+      </div>
+
+      <!-- Widget 2: Blog Categories -->
+      <div class="widget widget-categories">
+        <h3 class="widget-title">Blog Categories</h3>
+        <ul>
+          {{ range $name, $items := .Site.Taxonomies.categories }}
+            <li>
+              <a href="{{ "categories/" | relLangURL }}{{ $name | urlize }}">{{ $name | title }}</a>
+              <span class="cat-count">({{ len $items }})</span>
+            </li>
+          {{ end }}
+        </ul>
+      </div>
+
+      <!-- Widget 3: Recent Projects / Photo Grid -->
+      <div class="widget widget-projects">
+        <h3 class="widget-title">Recent Projects</h3>
+        <div class="projects-grid">
+          {{ range first 6 .Site.RegularPages }}
+            {{ $f := .Params.image | default .Params.featured_image }}
+            {{ if $f }}
+              <a href="{{ .RelPermalink }}" class="project-grid-item">
+                {{ $img := .Page.Resources.GetMatch $f | default (resources.Get $f) }}
+                {{ if $img }}
+                  {{ $w := $img.Resize "150x150 webp q75" }}
+                  <img src="{{ $w.RelPermalink }}" alt="{{ .Title }}" loading="lazy">
+                {{ else }}
+                  <img src="{{ $f | relURL }}" alt="{{ .Title }}" loading="lazy">
+                {{ end }}
+              </a>
+            {{ end }}
+          {{ end }}
+        </div>
+      </div>
+
+    </aside>
+
+  </div>
+</div>
 {{ end }}
