@@ -3,10 +3,23 @@
 {{ $alt := .Get "alt" | default "Foto Galeri" }}
 {{ $caption := .Get "caption" | default (.Get "alt") }}
 
-{{/* Tambahkan relURL agar path foto lokal terbaca dengan benar oleh Hugo */}}
 {{ $finalSrc := $src }}
+
+{{/* 1. Jika bukan URL luar (http/https), cari file di dalam folder Post (Page Bundle) */}}
 {{ if not (hasPrefix $src "http") }}
-  {{ $finalSrc = $src | relURL }}
+  {{/* Bersihkan karakter ./ atau / di awal path jika ada */}}
+  {{ $cleanSrc := strings.TrimPrefix "/" (strings.TrimPrefix "./" $src) }}
+  
+  {{/* Cari gambar di dalam folder post aktif */}}
+  {{ $imgResource := .Page.Resources.GetMatch $cleanSrc }}
+
+  {{ if $imgResource }}
+    {{/* Ambil URL relatif resmi yang dibuat oleh Hugo */}}
+    {{ $finalSrc = $imgResource.RelPermalink }}
+  {{ else }}
+    {{/* Fallback jika gambar dipanggil via path relatif langsung */}}
+    {{ $finalSrc = $cleanSrc }}
+  {{ end }}
 {{ end }}
 
 <div class="bento-item bento-{{ $size }}">
