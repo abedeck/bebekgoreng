@@ -17,45 +17,49 @@
         {{ $paginator := .Paginate .Pages 5 }}
         {{ range $paginator.Pages }}
           
-          <article class="classic-card">
-            <!-- Thumbnail Gambar + Badge Kategori -->
-            <div class="card-media">
-              {{ $featured := .Params.image | default .Params.featured_image }}
-              {{ if $featured }}
-                {{ $img := .Page.Resources.GetMatch $featured | default (resources.Get $featured) }}
-                {{ if $img }}
-                  {{ $webp := $img.Resize "300x300 webp q80" }}
-                  <img src="{{ $webp.RelPermalink }}" width="{{ $webp.Width }}" height="{{ $webp.Height }}" alt="{{ .Title }}" loading="lazy">
-                {{ else }}
-                  <img src="{{ if hasPrefix $featured "http" }}{{ $featured }}{{ else }}{{ $featured | relURL }}{{ end }}" alt="{{ .Title }}" loading="lazy">
-                {{ end }}
-              {{ else }}
-                <img src="{{ "images/default-thumb.jpg" | relURL }}" alt="{{ .Title }}" loading="lazy">
-              {{ end }}
+         <article class="classic-card">
+  <!-- Thumbnail Gambar (Otomatis Mencari cover.* di folder artikel) -->
+  <div class="card-media">
+    
+    {{/* SCRIPT AJAIB: Mencari file apapun bernama cover.* di folder artikel ini */}}
+    {{ $img := .Resources.GetMatch "cover.*" }}
 
-              {{ with .Params.categories }}
-                <span class="category-badge">{{ index . 0 }}</span>
-              {{ end }}
-            </div>
+    {{ if $img }}
+      {{/* Jika cover ditemukan -> Resize & Konversi ke WebP */}}
+      {{ $webp := $img.Resize "300x300 webp q80" }}
+      <img src="{{ $webp.RelPermalink }}" 
+           width="{{ $webp.Width }}" 
+           height="{{ $webp.Height }}" 
+           alt="{{ .Title }}" 
+           loading="lazy">
+    {{ else }}
+      {{/* Fallback jika artikel tersebut belum punya gambar cover */}}
+      <img src="{{ "images/default-thumb.jpg" | relURL }}" alt="{{ .Title }}" loading="lazy">
+    {{ end }}
 
-            <!-- Konten Teks -->
-            <div class="card-body">
-              <h2 class="card-title">
-                <a href="{{ .RelPermalink }}">{{ .Title }}</a>
-              </h2>
-              
-              <div class="card-meta">
-                <span>By {{ .Params.author | default "Admin" }}</span> • 
-                <time>{{ .Date.Format "September 2, 2006" }}</time>
-              </div>
+    {{ with .Params.categories }}
+      <span class="category-badge">{{ index . 0 }}</span>
+    {{ end }}
+  </div>
 
-              <p class="card-excerpt">
-                {{ .Summary | plainify | truncate 130 }}
-              </p>
+  <!-- Konten Teks -->
+  <div class="card-body">
+    <h2 class="card-title">
+      <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+    </h2>
+    
+    <div class="card-meta">
+      <span>By {{ .Params.author | default "Admin" }}</span> • 
+      <time>{{ .Date.Format "September 2, 2006" }}</time>
+    </div>
 
-              <a href="{{ .RelPermalink }}" class="view-details-btn">View Details »</a>
-            </div>
-          </article>
+    <p class="card-excerpt">
+      {{ .Summary | plainify | truncate 130 }}
+    </p>
+
+    <a href="{{ .RelPermalink }}" class="view-details-btn">View Details »</a>
+  </div>
+</article>
 
         {{ end }}
       </div>
