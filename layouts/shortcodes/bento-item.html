@@ -5,20 +5,21 @@
 
 {{ $finalSrc := $src }}
 
-{{/* 1. Jika bukan URL luar (http/https), cari file di dalam folder Post (Page Bundle) */}}
+{{/* Jika bukan URL luar (http/https) */}}
 {{ if not (hasPrefix $src "http") }}
-  {{/* Bersihkan karakter ./ atau / di awal path jika ada */}}
+  {{/* Bersihkan karakter ./ atau / di awal path */}}
   {{ $cleanSrc := strings.TrimPrefix "/" (strings.TrimPrefix "./" $src) }}
   
-  {{/* Cari gambar di dalam folder post aktif */}}
+  {{/* Cari file gambar asli (.jpg / .png / .jpeg) di dalam Page Bundle post */}}
   {{ $imgResource := .Page.Resources.GetMatch $cleanSrc }}
 
   {{ if $imgResource }}
-    {{/* Ambil URL relatif resmi yang dibuat oleh Hugo */}}
-    {{ $finalSrc = $imgResource.RelPermalink }}
+    {{/* OTOMATIS CONVERT KE WEBP & RESIZE MAX LEBAR 1200px (Kualitas 80%) */}}
+    {{ $convertedImg := $imgResource.Resize "1200x webp q80" }}
+    {{ $finalSrc = $convertedImg.RelPermalink }}
   {{ else }}
-    {{/* Fallback jika gambar dipanggil via path relatif langsung */}}
-    {{ $finalSrc = $cleanSrc }}
+    {{/* Fallback path jika resource tidak ditemukan */}}
+    {{ $finalSrc = $cleanSrc | relURL }}
   {{ end }}
 {{ end }}
 
