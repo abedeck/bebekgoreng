@@ -39,22 +39,18 @@
     <!-- BENTO GRID GALLERY (GOOGLE DRIVE INTEGRATION) -->
     <!-- ======================================================== -->
     {{ if .Params.bento_gallery }}
-      <div class="bento-gallery-container">
-        {{ range .Params.bento_gallery }}
-          {{ $driveUrl := printf "https://drive.google.com/uc?export=view&id=%s" .drive_id }}
-          <div class="bento-item bento-{{ .size | default "normal" }}">
-            <img 
-              src="{{ $driveUrl }}" 
-              alt="{{ .alt | default $.Title }}" 
-              loading="lazy" 
-            />
-            {{ if .alt }}
-              <span class="bento-caption">{{ .alt }}</span>
-            {{ end }}
-          </div>
-        {{ end }}
+  <div class="bento-gallery-container">
+    {{ range .Params.bento_gallery }}
+      <div class="bento-item bento-{{ .size | default "normal" }}">
+        <img 
+          src="{{ .url }}" 
+          alt="{{ $.Title }}" 
+          loading="lazy" 
+        />
       </div>
     {{ end }}
+  </div>
+{{ end }}
     <!-- ======================================================== -->
 
     <div class="post-content">

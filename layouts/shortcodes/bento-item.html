@@ -1,0 +1,14 @@
+{{ $src := .Get "src" | default (.Get 0) }}
+{{ $size := .Get "size" | default "normal" }}
+{{ $alt := .Get "alt" | default "Foto Galeri" }}
+
+<div class="bento-item bento-{{ $size }}">
+  <img 
+    src="{{ $src }}" 
+    alt="{{ $alt }}" 
+    loading="lazy" 
+  />
+  {{ if .Get "caption" }}
+    <span class="bento-caption">{{ .Get "caption" }}</span>
+  {{ end }}
+</div>
