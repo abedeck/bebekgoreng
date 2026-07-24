@@ -17,6 +17,9 @@ name = 'Tags'
 pageRef = '/tags'
 weight = 30
 
+[params]
+  mainSections = ["post", "blog","posts"]
+
 [module]
   [module.hugoVersion]
     extended = false
