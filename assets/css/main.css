@@ -1209,3 +1209,111 @@ article table tr:nth-child(even),
     -webkit-overflow-scrolling: touch;
   }
 }
+
+/* ==========================================================================
+   BENTO GRID PHOTO GALLERY
+   Designed for Hugo + Decap CMS (Google Drive Image Integration)
+   ========================================================================== */
+
+/* 1. CONTAINER UTAMA */
+.bento-gallery-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3 Kolom Utama Desktop */
+  grid-auto-rows: 250px;                 /* Tinggi default tiap baris */
+  gap: 16px;                             /* Jarak antar kartu foto */
+  margin: 2.5rem 0;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* 2. BASE ITEM & GAMBAR */
+.bento-item {
+  position: relative;
+  overflow: hidden;
+  border-radius: 16px;                   /* Sudut membulat halus khas Bento UI */
+  background-color: #f0f0f0;             /* Color fallback saat gambar loading */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), 
+              box-shadow 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.bento-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;                     /* Memastikan foto ter-crop rapi tanpa gepeng */
+  display: block;
+  transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+/* Hover Effect */
+.bento-item:hover {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+.bento-item:hover img {
+  transform: scale(1.04);                /* Zoom-in halus saat di-hover */
+}
+
+/* 3. VARIASI UKURAN GRID (Sesuai Option di Decap CMS) */
+
+/* Normal (1x1): 1 Kolom, 1 Baris */
+.bento-normal {
+  grid-column: span 1;
+  grid-row: span 1;
+}
+
+/* Wide / Landscape (2x1): Memanjang 2 Kolom ke samping */
+.bento-wide {
+  grid-column: span 2;
+  grid-row: span 1;
+}
+
+/* Tall / Portrait (1x2): Tinggi 2 Baris ke bawah */
+.bento-tall {
+  grid-column: span 1;
+  grid-row: span 2;
+}
+
+/* Big (2x2): Kotak Utama Besar 2 Kolom x 2 Baris */
+.bento-big {
+  grid-column: span 2;
+  grid-row: span 2;
+}
+
+/* 4. RESPONSIVE DESIGN (TABLET & MOBILE) */
+
+/* Tablet & HP Layar Lebar (<= 768px) */
+@media (max-width: 768px) {
+  .bento-gallery-container {
+    grid-template-columns: repeat(2, 1fr); /* Ubah ke 2 Kolom */
+    grid-auto-rows: 200px;
+    gap: 12px;
+  }
+
+  .bento-wide,
+  .bento-big {
+    grid-column: span 2;
+  }
+}
+
+/* Smartphone / HP (<= 480px) */
+@media (max-width: 480px) {
+  .bento-gallery-container {
+    grid-template-columns: 1fr;           /* 1 Kolom Penuh */
+    grid-auto-rows: 220px;
+    gap: 10px;
+  }
+
+  .bento-normal,
+  .bento-wide,
+  .bento-tall,
+  .bento-big {
+    grid-column: span 1 !important;
+    grid-row: span 1 !important;
+  }
+
+  .bento-tall,
+  .bento-big {
+    grid-row: span 2 !important;
+  }
+}
