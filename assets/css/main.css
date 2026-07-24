@@ -279,7 +279,13 @@ a {
         left: 1rem;            /* Geser ke rata kiri (sesuaikan margin/padding yang kamu mau) */
         transform: translateY(-50%); /* HANYA memosisikan vertikal tengah, horizontalnya rata kiri */
     }
-    .menu-toggle { display: flex; }
+    .menu-toggle { 
+        display: flex;
+        position: absolute;
+        right: 4%;
+        top: 50%;
+        transform: translateY(-50%);
+    }
     body > main {
         padding-top: 60px !important; /* Dari 80px dikurangi jadi 60px */
     }
