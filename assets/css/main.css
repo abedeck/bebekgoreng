@@ -1154,7 +1154,7 @@ a {
   }
 }
 
-/* Styling Tabel Markdown Hugo */
+/* 1. Base Styling Tabel (Garis, Spasi, & Warna) */
 .content table,
 article table {
   width: 100%;
@@ -1181,4 +1181,15 @@ article table th {
 .content table tr:nth-child(even),
 article table tr:nth-child(even) {
   background-color: #f9f9f9;
+}
+
+/* 2. Responsif Mobile (Scroll Horizontal & Mencegah Teks Terlipat Aneh) */
+@media screen and (max-width: 768px) {
+  .content table,
+  article table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;               /* Biar isi kolom gak terlalu sempit/tertekuk */
+    -webkit-overflow-scrolling: touch; /* Scroll halus di perangkat iOS/iPhone */
+  }
 }
