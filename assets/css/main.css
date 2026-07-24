@@ -1165,9 +1165,10 @@ a {
   }
 }
 
-/* 1. Base Styling Tabel (Garis, Spasi, & Warna) */
+/* Styling Tabel Markdown Hugo & Article */
 .content table,
-article table {
+article table,
+.post-content table {
   width: 100%;
   border-collapse: collapse;
   margin: 1.5rem 0;
@@ -1176,31 +1177,34 @@ article table {
 .content table th,
 .content table td,
 article table th,
-article table td {
-  border: 1px solid #e2e8f0; /* Garis tepi tipis abu-abu */
-  padding: 10px 14px;        /* Memberikan jarak spasi teks agar tidak mepet */
+article table td,
+.post-content table th,
+.post-content table td {
+  border: 1px solid #e2e8f0;
+  padding: 10px 14px;
   text-align: left;
 }
 
 .content table th,
-article table th {
-  background-color: #f8fafc; /* Warna background header tabel */
+article table th,
+.post-content table th {
+  background-color: #f8fafc;
   font-weight: 600;
 }
 
-/* Efek warna selang-seling tiap baris (opsional) */
 .content table tr:nth-child(even),
-article table tr:nth-child(even) {
+article table tr:nth-child(even),
+.post-content table tr:nth-child(even) {
   background-color: #f9f9f9;
 }
 
-/* 2. Responsif Mobile (Scroll Horizontal & Mencegah Teks Terlipat Aneh) */
 @media screen and (max-width: 768px) {
   .content table,
-  article table {
+  article table,
+  .post-content table {
     display: block;
     overflow-x: auto;
-    white-space: nowrap;               /* Biar isi kolom gak terlalu sempit/tertekuk */
-    -webkit-overflow-scrolling: touch; /* Scroll halus di perangkat iOS/iPhone */
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
   }
 }
