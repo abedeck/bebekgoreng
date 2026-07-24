@@ -18,60 +18,60 @@
         {{ range $paginator.Pages }}
           
           <article class="classic-card">
-            <!-- Thumbnail Gambar + Badge Kategori -->
-            <div class="card-media">
-              
-              {{/* Logika Pencarian Gambar Otomatis */}}
-              {{ $f := .Params.image | default .Params.featured_image }}
-              {{ $img := "" }}
+  <!-- Thumbnail Gambar + Badge Kategori -->
+  <div class="card-media">
+    
+    {{/* Logika Pencarian Gambar Otomatis */}}
+    {{ $f := .Params.image | default .Params.featured_image }}
+    {{ $img := "" }}
 
-              {{/* 1. Cek dari Front Matter .md */}}
-              {{ if $f }}
-                {{ $img = .Resources.GetMatch $f | default (resources.Get $f) }}
-              {{ end }}
+    {{ if $f }}
+      {{ $img = .Resources.GetMatch $f | default (resources.Get $f) }}
+    {{ end }}
 
-              {{/* 2. Fallback: Cari cover.* atau gambar pertama di folder artikel */}}
-              {{ if not $img }}
-                {{ $img = .Resources.GetMatch "cover.*" }}
-                {{ if not $img }}
-                  {{ $images := .Resources.ByType "image" }}
-                  {{ if gt (len $images) 0 }}
-                    {{ $img = index $images 0 }}
-                  {{ end }}
-                {{ end }}
-              {{ end }}
+    {{ if not $img }}
+      {{ $img = .Resources.GetMatch "cover.*" }}
+      {{ if not $img }}
+        {{ $images := .Resources.ByType "image" }}
+        {{ if gt (len $images) 0 }}
+          {{ $img = index $images 0 }}
+        {{ end }}
+      {{ end }}
+    {{ end }}
 
-              <!-- Render Gambar -->
-              {{ if $img }}
-                {{ $webp := $img.Resize "300x300 webp q80" }}
-                <img src="{{ $webp.RelPermalink }}" width="{{ $webp.Width }}" height="{{ $webp.Height }}" alt="{{ .Title }}" loading="lazy">
-              {{ else }}
-                <img src="{{ "images/default-thumb.jpg" | relURL }}" alt="{{ .Title }}" loading="lazy">
-              {{ end }}
+    <!-- Link Gambar (Dapat Di-klik) -->
+    <a href="{{ .RelPermalink }}" class="card-media-link" aria-label="{{ .Title }}">
+      {{ if $img }}
+        {{ $webp := $img.Resize "300x300 webp q80" }}
+        <img src="{{ $webp.RelPermalink }}" width="{{ $webp.Width }}" height="{{ $webp.Height }}" alt="{{ .Title }}" loading="lazy">
+      {{ else }}
+        <img src="{{ "images/default-thumb.jpg" | relURL }}" alt="{{ .Title }}" loading="lazy">
+      {{ end }}
+    </a>
 
-              {{ with .Params.categories }}
-                <span class="category-badge">{{ index . 0 }}</span>
-              {{ end }}
-            </div>
+    {{ with .Params.categories }}
+      <span class="category-badge">{{ index . 0 }}</span>
+    {{ end }}
+  </div>
 
-            <!-- Konten Teks -->
-            <div class="card-body">
-              <h2 class="card-title">
-                <a href="{{ .RelPermalink }}">{{ .Title }}</a>
-              </h2>
-              
-              <div class="card-meta">
-                <span>By {{ .Params.author | default "Admin" }}</span> • 
-                <time>{{ .Date.Format "September 2, 2006" }}</time>
-              </div>
+  <!-- Konten Teks -->
+  <div class="card-body">
+    <h2 class="card-title">
+      <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+    </h2>
+    
+    <div class="card-meta">
+      <span>By {{ .Params.author | default "Sekretariat Gereja" }}</span> • 
+      <time>{{ .Date.Format "September 2, 2006" }}</time>
+    </div>
 
-              <p class="card-excerpt">
-                {{ .Summary | plainify | truncate 130 }}
-              </p>
+    <p class="card-excerpt">
+      {{ .Summary | plainify | truncate 130 }}
+    </p>
 
-              <a href="{{ .RelPermalink }}" class="view-details-btn">View Details »</a>
-            </div>
-          </article>
+    <a href="{{ .RelPermalink }}" class="view-details-btn">View Details »</a>
+  </div>
+</article>
 
         {{ end }}
       </div>
