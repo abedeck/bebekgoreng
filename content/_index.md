@@ -7,4 +7,4 @@ image_right = "images/foto-kanan.jpg"
 caption_right = "Indonesia, YK"
 +++
 
-We create modern interiors and architectural solutions for a comfortable life. We work on full-cycle projects from drawings to decoration...
+Wadah persekutuan untuk bertumbuh, melayani, dan membagikan kasih. Mari menjadi bagian dari perjalanan iman dan pelayanan bersama kami.
