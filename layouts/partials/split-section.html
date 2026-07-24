@@ -47,7 +47,7 @@
                     </p>
                 </div>
 
-               {{ $recentPosts := where site.RegularPages "Section" "post" }}
+               {{ $recentPosts := where site.RegularPages "Section" "posts" }}
                 {{ $recentPosts = $recentPosts.ByDate.Reverse | first 1 }}
                 {{ with $recentPosts }}
                 <div class="meta-group group-news">
