@@ -35,23 +35,6 @@
       </div>
     </header>
 
-    <!-- ======================================================== -->
-    <!-- BENTO GRID GALLERY (GOOGLE DRIVE INTEGRATION) -->
-    <!-- ======================================================== -->
-    {{ if .Params.bento_gallery }}
-  <div class="bento-gallery-container">
-    {{ range .Params.bento_gallery }}
-      <div class="bento-item bento-{{ .size | default "normal" }}">
-        <img 
-          src="{{ .url }}" 
-          alt="{{ $.Title }}" 
-          loading="lazy" 
-        />
-      </div>
-    {{ end }}
-  </div>
-{{ end }}
-    <!-- ======================================================== -->
 
     <div class="post-content">
       {{ .Content }}
