@@ -46,8 +46,8 @@
                         </a>
                     </p>
                 </div>
-
-               {{ $recentPosts := where site.RegularPages "Section" "posts" }}
+               {{ $category := "Warta Gereja" }}
+{{ $recentPosts := where (where site.RegularPages "Section" "posts") ".Params.categories" "intersect" (slice $category) }}
                 {{ $recentPosts = $recentPosts.ByDate.Reverse | first 1 }}
                 {{ with $recentPosts }}
                 <div class="meta-group group-news">
