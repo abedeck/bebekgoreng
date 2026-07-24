@@ -275,6 +275,7 @@ a {
 
 @media (max-width: 768px) {
     .nav-right { display: none; }
+    .nav-left { display: none; }
     .brand-logo {
         left: 1rem;            /* Geser ke rata kiri (sesuaikan margin/padding yang kamu mau) */
         transform: translateY(-50%); /* HANYA memosisikan vertikal tengah, horizontalnya rata kiri */
