@@ -721,7 +721,7 @@ article table tr:nth-child(even),
     flex-shrink: 0 !important;
     display: block !important;
     position: sticky;
-    top: 24px;
+    top: 95px;
 }
 
 /* Pembungkus Utama Iklan Sidebar */
