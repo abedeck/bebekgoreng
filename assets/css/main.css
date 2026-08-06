@@ -694,12 +694,36 @@ article table tr:nth-child(even),
 }
 
 .post-sidebar {
-    width: 300px;
+    width: 100%;
+    max-width: 300px; /* Lebar standar banner iklan sidebar */
     flex-shrink: 0;
-    position: sticky;
-    top: 2rem;
+}
+/* Pembungkus utama iklan di sidebar */
+.sidebar-ads-wrapper {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 16px; /* Jarak antar iklan jika lebih dari satu */
 }
 
+/* Kotak untuk setiap item iklan */
+.sidebar-ad-item {
+    width: 100%;
+    max-width: 100%; /* Mencegah item meluap dari sidebar */
+    overflow: hidden;
+    border-radius: 8px; /* Opsional: membuat sudut gambar agak membulat */
+    box-sizing: border-box;
+}
+
+/* Memaksa gambar menyesuaikan lebar sidebar */
+.sidebar-ad-item img,
+.ad-banner-img {
+    width: 100% !important;     /* Memaksa lebar gambar mengikuti lebar sidebar */
+    max-width: 100% !important; /* Mencegah gambar melebihi wadahnya */
+    height: auto !important;    /* Menjaga proporsi/rasio gambar agar tidak gepeng */
+    display: block;             /* Menghilangkan celah kosong di bawah gambar */
+    object-fit: contain;        /* Memastikan seluruh isi gambar terlihat sempurna */
+}
 /* ==========================================================================
    7. CLASSIC BLOG & SIDEBAR WIDGETS
    ========================================================================== */
