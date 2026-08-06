@@ -1263,40 +1263,50 @@ article table tr:nth-child(even),
 /* ==========================================================================
    FIX LAYOUT POST-LAYOUT-WRAPPER (AGAR SIDEBAR DI SAMPING KANAN)
    ========================================================================== */
+/* ==========================================================================
+   LAYOUT SINGLE POST (ARTIKEL TERANGKUL DI TENGAH & LUAS + IKLAN DI KANAN)
+   ========================================================================== */
 
-/* 1. Aktifkan Flexbox pada wrapper utama */
+/* Pembungkus Utama Layout */
 .post-layout-wrapper {
     display: flex !important;
     flex-direction: row !important;
-    justify-content: center;
-    align-items: flex-start;
-    gap: 30px;
-    max-width: 1300px;
-    margin: 0 auto;
-    padding: 20px;
-    width: 100%;
-    box-sizing: border-box;
+    justify-content: center !important; /* Memusatkan seluruh komponen ke tengah */
+    align-items: flex-start !important;
+    gap: 40px !important;               /* Jarak ideal antara artikel dan iklan */
+    max-width: 1320px !important;       /* Wadah lebih luas sejajar dengan header/navbar */
+    width: 100% !important;
+    margin: 0 auto !important;
+    padding: 30px 24px !important;      /* Padding menyesuaikan margin layar */
+    box-sizing: border-box !important;
 }
 
-/* 2. Mencegah Spacer Kiri Memakan Tempat Berlebih */
+/* Sembunyikan spacer kiri agar tidak memakan space */
 .post-layout-wrapper .layout-spacer {
     display: none !important;
 }
 
-/* 3. Artikel Utama di Tengah (Diberi min-width: 0 agar tidak mendorong sidebar) */
+/* Artikel Utama (Memberikan Space Luas & Lega) */
 .post-layout-wrapper .post-single {
-    flex: 1 1 auto !important;
-    min-width: 0 !important; /* KUNCI UTAMA: Mencegah artikel memakan seluruh lebar layar */
-    max-width: 720px;
+    flex: 1 1 auto !important;          /* Mengisi sisa ruang yang tersedia di kiri-tengah */
+    width: 100% !important;
+    max-width: 860px !important;        /* Lebar artikel jauh lebih luas (tabel warta tidak sesak) */
+    min-width: 0 !important;            /* Mencegah gambar/tabel memecah flexbox */
 }
 
-/* 4. Sidebar Kanan (Iklan) */
+/* Sidebar Iklan Kanan (Menempel Rapi di Sebelah Kanan) */
 .post-layout-wrapper .post-sidebar {
     width: 300px !important;
     min-width: 300px !important;
     max-width: 300px !important;
     flex-shrink: 0 !important;
     display: block !important;
+}
+
+/* Opsional: Efek Sticky agar Iklan Tetap Ikut Saat Artikel Di-scroll */
+.post-layout-wrapper .post-sidebar {
+    position: sticky;
+    top: 24px;
 }
 
 /* 5. Styling Gambar Iklan dalam Sidebar */
