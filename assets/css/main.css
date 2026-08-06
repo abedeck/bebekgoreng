@@ -1280,10 +1280,7 @@ article table tr:nth-child(even),
 
 /* 2. Mencegah Spacer Kiri Memakan Tempat Berlebih */
 .post-layout-wrapper .layout-spacer {
-    width: 300px !important;
-    min-width: 300px !important;
-    flex-shrink: 0 !important;
-    display: block;
+    display: none !important;
 }
 
 /* 3. Artikel Utama di Tengah (Diberi min-width: 0 agar tidak mendorong sidebar) */
