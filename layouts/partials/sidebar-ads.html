@@ -1,17 +1,24 @@
-{{/* Menggunakan site.Pages agar menjangkau semua section tanpa terpengaruh scope halaman */}}
-{{ $ads := where site.Pages "Section" "ads" }}
-{{ $activeAds := where (where $ads "IsPage" true) "Params.active" true }}
+{{/* 1. Ambil halaman dari section "ads" yang aktif dan bukan draft */}}
+{{ $ads := where site.RegularPages "Section" "ads" }}
+{{ $activeAds := where (where $ads "Draft" false) "Params.active" true }}
 
-{{ if $activeAds }}
-  {{ range sort $activeAds "Params.weight" "asc" }}
-    <div class="ad-item" style="margin-bottom: 20px; text-align: center;">
-      <a href="{{ .Params.link }}" target="_blank" rel="noopener sponsored">
+{{/* 2. Urutkan berdasarkan "weight" dari angka terkecil ke terbesar */}}
+{{ $sortedAds := sort $activeAds "Params.weight" "asc" }}
+
+{{ if $sortedAds }}
+  <div class="sidebar-ads-wrapper">
+    {{ range $sortedAds }}
+      <div class="sidebar-ad-item">
         {{ if .Params.image }}
-          <img src="{{ .Params.image }}" alt="{{ .Title }}" style="max-width: 100%; height: auto; border-radius: 8px; display: block; margin: 0 auto;">
+          <a href="{{ .Params.link | default "#" }}" target="_blank" rel="noopener nofollow sponsored">
+            <img src="{{ .Params.image | relURL }}" alt="{{ .Title }}" class="ad-banner-img" loading="lazy">
+          </a>
         {{ else }}
-          <span>{{ .Title }}</span>
+          <div class="ad-text-card">
+            <h4><a href="{{ .Params.link }}">{{ .Title }}</a></h4>
+          </div>
         {{ end }}
-      </a>
-    </div>
-  {{ end }}
+      </div>
+    {{ end }}
+  </div>
 {{ end }}
