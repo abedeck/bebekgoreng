@@ -25,10 +25,13 @@
   }
   </script>
 
-  <!-- Container Utama dengan Grid / Layout Tiga Kolom Seimbang -->
-  <div class="page-with-sidebar">
+  <!-- Container Utama dengan Layout Grid Presisi -->
+  <div class="post-layout-wrapper">
     
-    <!-- Area Artikel (Batas Maksimal & Tetap Di Tengah) -->
+    <!-- Kolom Kosong Kiri (Penyeimbang Kiri Agar Artikel Tepat di Tengah) -->
+    <div class="layout-spacer"></div>
+
+    <!-- Artikel Utama (Tepat di Tengah) -->
     <article class="post-single">
 
       {{ with .Params.cover }}

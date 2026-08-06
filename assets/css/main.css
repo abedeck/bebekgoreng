@@ -1199,45 +1199,61 @@ article table tr:nth-child(even),
   background-color: #f9f9f9;
 }
 /* ==========================================================================
-   SIDEBAR LAYOUT (POST + ADS) — HUGO + DECAP CMS
+   SIDEBAR LAYOUT (POST + ADS) — PERBAIKAN PRESISI TENGAN
    ========================================================================== */
 
-/* Container Utama */
+/* Container Utama Grid 3 Kolom (Spacer Kiri | Artikel Tengah | Sidebar Kanan) */
 .page-with-sidebar {
-  display: flex;
+  display: grid;
+  grid-template-columns: 300px minmax(0, 780px) 300px;
   justify-content: center;
-  align-items: flex-start;
   gap: 2.5rem;
-  max-width: 1200px;
+  max-width: 1440px;
   margin: 0 auto;
-  padding: 0 1rem;
+  padding: 0 1.5rem;
 }
 
-/* Artikel Utama - Terkunci Presisi di Tengah */
+/* Kolom Semu / Spacer Kiri agar Artikel Tepat di Tengah Layar */
+.page-with-sidebar::before {
+  content: "";
+  display: block;
+}
+
+/* Artikel Utama - Dikunci Presisi */
 .post-single {
-  flex: 1;
-  max-width: 780px; /* Lebar optimal agar mata nyaman membaca */
   width: 100%;
+  min-width: 0; /* Mencegah tabel/gambar merusak layout grid */
+  margin: 0 auto;
 }
 
-/* Sidebar Iklan - Mengambang Samping Kanan */
+/* Sidebar Iklan Kanan */
 .post-sidebar {
   width: 300px;
   flex-shrink: 0;
   position: sticky;
-  top: 2rem; /* Iklan menempel di layar saat di-scroll */
+  top: 2rem;
 }
 
-/* Tampilan Layar HP / Tablet (Maks 1024px) */
-@media (max-width: 1024px) {
+/* Responsive Laptop Sedang & Tablet (<= 1280px) */
+@media (max-width: 1280px) {
   .page-with-sidebar {
-    flex-direction: column;
-    align-items: center;
+    /* Sembunyikan spacer kiri, artikel mengambil sisa ruang kiri/tengah */
+    grid-template-columns: minmax(0, 1fr) 300px;
+  }
+  .page-with-sidebar::before {
+    display: none;
+  }
+}
+
+/* Responsive Mobile / HP (<= 900px) */
+@media (max-width: 900px) {
+  .page-with-sidebar {
+    grid-template-columns: 1fr; /* Satu kolom vertikal */
+    gap: 1.5rem;
   }
   
   .post-sidebar {
     width: 100%;
-    max-width: 780px;
     position: static;
     margin-top: 2rem;
   }
