@@ -1261,34 +1261,40 @@ article table tr:nth-child(even),
 }
 
 /* ==========================================================================
-   FIX LAYOUT SINGLE POST & SIDEBAR IKLAN
+   FIX LAYOUT POST-LAYOUT-WRAPPER (AGAR SIDEBAR DI SAMPING KANAN)
    ========================================================================== */
 
-/* 1. Paksa pembungkus utama single post menggunakan FLEX */
+/* 1. Aktifkan Flexbox pada wrapper utama */
 .post-layout-wrapper {
     display: flex !important;
     flex-direction: row !important;
     justify-content: center;
     align-items: flex-start;
-    gap: 2.5rem;
-    max-width: 1200px;
+    gap: 30px;
+    max-width: 1300px;
     margin: 0 auto;
-    padding: 20px 1.5rem;
+    padding: 20px;
     width: 100%;
     box-sizing: border-box;
 }
 
-/* 2. Artikel Utama (Tengah/Kiri) */
-.post-layout-wrapper .post-single,
-.post-layout-wrapper article {
-    flex: 1 1 auto;
-    min-width: 0; /* Penting agar artikel tidak meluap */
-    max-width: 800px;
+/* 2. Mencegah Spacer Kiri Memakan Tempat Berlebih */
+.post-layout-wrapper .layout-spacer {
+    width: 300px !important;
+    min-width: 300px !important;
+    flex-shrink: 0 !important;
+    display: block;
 }
 
-/* 3. Sidebar Kanan (Iklan) */
-.post-layout-wrapper .post-sidebar,
-.post-sidebar {
+/* 3. Artikel Utama di Tengah (Diberi min-width: 0 agar tidak mendorong sidebar) */
+.post-layout-wrapper .post-single {
+    flex: 1 1 auto !important;
+    min-width: 0 !important; /* KUNCI UTAMA: Mencegah artikel memakan seluruh lebar layar */
+    max-width: 720px;
+}
+
+/* 4. Sidebar Kanan (Iklan) */
+.post-layout-wrapper .post-sidebar {
     width: 300px !important;
     min-width: 300px !important;
     max-width: 300px !important;
@@ -1296,9 +1302,9 @@ article table tr:nth-child(even),
     display: block !important;
 }
 
-/* 4. Gambar Iklan dalam Sidebar */
-.sidebar-ad-item img,
-.ad-banner-img {
+/* 5. Styling Gambar Iklan dalam Sidebar */
+.post-sidebar img,
+.sidebar-ad-item img {
     width: 100% !important;
     height: auto !important;
     display: block !important;
@@ -1306,15 +1312,21 @@ article table tr:nth-child(even),
     border-radius: 8px;
 }
 
-/* 5. Responsif di Layar HP/Tablet */
-@media (max-width: 992px) {
+/* 6. Responsif Layar Mobile / Tablet */
+@media (max-width: 1024px) {
+    .post-layout-wrapper .layout-spacer {
+        display: none !important; /* Sembunyikan spacer saat layar mengecil */
+    }
+}
+
+@media (max-width: 768px) {
     .post-layout-wrapper {
         flex-direction: column !important;
         align-items: center;
     }
-
+    
     .post-layout-wrapper .post-single,
-    .post-sidebar {
+    .post-layout-wrapper .post-sidebar {
         width: 100% !important;
         max-width: 100% !important;
         min-width: 0 !important;
