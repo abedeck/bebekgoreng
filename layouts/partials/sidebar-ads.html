@@ -7,24 +7,30 @@
 
 {{ if $sortedAds }}
   <div class="sidebar-ads-wrapper">
-  {{ range $sortedAds }}
-    <div class="sidebar-ad-item">
-      {{ if .Params.image }}
-        <a href="{{ .Params.link | default "#" }}" target="_blank" rel="noopener nofollow sponsored" class="ad-banner-link">
-          <img 
-            src="{{ .Params.image | relURL }}" 
-            alt="{{ .Title }}" 
-            class="ad-banner-img" 
-            loading="lazy"
-            style="width: 100%; height: auto; display: block;"
-          >
-        </a>
-      {{ else }}
-        <div class="ad-text-card">
-          <h4><a href="{{ .Params.link }}">{{ .Title }}</a></h4>
+    <!-- Judul Widget Sidebar -->
+    <h3 class="widget-title">Sponsor</h3>
+
+    <!-- Pembungkus Khusus Daftar Iklan -->
+    <div class="sidebar-ads-list">
+      {{ range $sortedAds }}
+        <div class="sidebar-ad-item">
+          {{ if .Params.image }}
+            <a href="{{ .Params.link | default "#" }}" target="_blank" rel="noopener nofollow sponsored" class="ad-banner-link">
+              <img 
+                src="{{ .Params.image | relURL }}" 
+                alt="{{ .Title }}" 
+                class="ad-banner-img" 
+                loading="lazy"
+              >
+            </a>
+          {{ else }}
+            <div class="ad-text-card">
+              <h4><a href="{{ .Params.link }}">{{ .Title }}</a></h4>
+            </div>
+          {{ end }}
         </div>
       {{ end }}
     </div>
-  {{ end }}
-</div>
+
+  </div>
 {{ end }}

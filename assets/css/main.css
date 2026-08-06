@@ -372,7 +372,7 @@ a {
 }
 
 /* ==========================================================================
-   5. SINGLE POST ARTICLE
+   5. SINGLE POST ARTICLE & CONTENT
    ========================================================================== */
 .post-single {
     max-width: 720px;
@@ -681,51 +681,82 @@ article table tr:nth-child(even),
 }
 
 /* ==========================================================================
-   6. PAGE WITH SIDEBAR (LAYOUT PERBAIKAN PRESISI)
+   6. PAGE LAYOUT WITH SIDEBAR & ADS STYLING
    ========================================================================== */
 
-   .page-with-sidebar {
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    gap: 2.5rem;
-    max-width: 1440px;
-    margin: 0 auto;
-    padding: 0 1.5rem;
+/* Pembungkus Utama Layar Penuh / Post Layout */
+.post-layout-wrapper,
+.page-with-sidebar {
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: center !important;
+    align-items: flex-start !important;
+    gap: 40px !important;
+    max-width: 1320px !important;
+    width: 100% !important;
+    margin: 0 auto !important;
+    padding: 30px 24px !important;
+    box-sizing: border-box !important;
 }
 
-.post-sidebar {
-    width: 100%;
-    max-width: 300px; /* Lebar standar banner iklan sidebar */
-    flex-shrink: 0;
+/* Sembunyikan spacer kiri */
+.post-layout-wrapper .layout-spacer {
+    display: none !important;
 }
-/* Pembungkus utama iklan di sidebar */
+
+/* Artikel Utama (Melebar Luas & Mengisi Ruang Kiri) */
+.post-layout-wrapper .post-single,
+.page-with-sidebar .post-single {
+    flex: 1 1 auto !important;
+    width: 100% !important;
+    max-width: 860px !important;
+    min-width: 0 !important;
+}
+
+/* Sidebar Iklan Kanan (Terkunci di Lebar 300px) */
+.post-sidebar {
+    width: 300px !important;
+    min-width: 300px !important;
+    max-width: 300px !important;
+    flex-shrink: 0 !important;
+    display: block !important;
+    position: sticky;
+    top: 24px;
+}
+
+/* Pembungkus Utama Iklan Sidebar */
 .sidebar-ads-wrapper {
     width: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 16px; /* Jarak antar iklan jika lebih dari satu */
+    margin-bottom: 24px;
 }
 
-/* Kotak untuk setiap item iklan */
+/* Styling Judul Widget Sidebar */
+.sidebar-ads-wrapper .widget-title {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #222;
+    margin: 0 0 12px 0;
+    padding-bottom: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-bottom: 2px solid #eee;
+}
+
+/* Pembungkus & Item Daftar Iklan */
+.sidebar-ads-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
 .sidebar-ad-item {
     width: 100%;
-    max-width: 100%; /* Mencegah item meluap dari sidebar */
+    max-width: 100%;
     overflow: hidden;
-    border-radius: 8px; /* Opsional: membuat sudut gambar agak membulat */
+    border-radius: 8px;
     box-sizing: border-box;
 }
 
-/* Memaksa gambar menyesuaikan lebar sidebar */
-.sidebar-ad-item img,
-.ad-banner-img {
-    width: 100% !important;     /* Memaksa lebar gambar mengikuti lebar sidebar */
-    max-width: 100% !important; /* Mencegah gambar melebihi wadahnya */
-    height: auto !important;    /* Menjaga proporsi/rasio gambar agar tidak gepeng */
-    display: block;             /* Menghilangkan celah kosong di bawah gambar */
-    object-fit: contain;        /* Memastikan seluruh isi gambar terlihat sempurna */
-}
-/* Pastikan link bertindak sebagai pembungkus block */
 .sidebar-ad-item a.ad-banner-link {
     display: block !important;
     width: 100% !important;
@@ -734,21 +765,17 @@ article table tr:nth-child(even),
     overflow: hidden;
 }
 
-/* Memaksa elemen gambar mengikuti lebar penuh pembungkusnya */
-.sidebar-ad-item img.ad-banner-img {
+.sidebar-ad-item img,
+.sidebar-ad-item img.ad-banner-img,
+.post-sidebar img {
     width: 100% !important;
     max-width: 100% !important;
     height: auto !important;
     display: block !important;
-    object-fit: cover; /* atau 'contain' jika ingin rasio gambar tidak terpotong */
+    object-fit: cover;
+    border-radius: 8px;
 }
 
-/* Membatasi wadah iklan agar tidak meluap dari sidebar */
-.sidebar-ad-item {
-    width: 100%;
-    max-width: 100%;
-    box-sizing: border-box;
-}
 /* ==========================================================================
    7. CLASSIC BLOG & SIDEBAR WIDGETS
    ========================================================================== */
@@ -1049,13 +1076,13 @@ article table tr:nth-child(even),
 .delay-4 { animation-delay: 0.6s; }
 
 /* ==========================================================================
-   10. MEDIA QUERIES & RESPONSIVE DESIGN (KONSOLIDASI)
+   10. MEDIA QUERIES & RESPONSIVE DESIGN
    ========================================================================== */
 
 /* Laptop / Desktop Kecil (<= 1280px) */
 @media (max-width: 1280px) {
-    .page-with-sidebar {
-        flex-direction: row;
+    .page-with-sidebar,
+    .post-layout-wrapper {
         justify-content: center;
     }
 }
@@ -1064,6 +1091,7 @@ article table tr:nth-child(even),
 @media (max-width: 1024px) {
     .caption-main { display: none; }
     .gallery-wrapper { max-width: 75%; }
+    .post-layout-wrapper .layout-spacer { display: none !important; }
 }
 
 /* Tablet Portrait & HP Lebar (<= 900px) */
@@ -1086,21 +1114,9 @@ article table tr:nth-child(even),
     }
     
     .split-img-wrapper { max-height: 60vh; }
-
-    .page-with-sidebar {
-        flex-direction: column;
-        align-items: center;
-        gap: 1.5rem;
-    }
-    
-    .post-sidebar {
-        width: 100%;
-        position: static;
-        margin-top: 2rem;
-    }
 }
 
-/* Tablet Standar & Mobile Layout (<= 850px) */
+/* Tablet Standar (<= 850px) */
 @media (max-width: 850px) {
     .blog-layout-grid { grid-template-columns: 1fr; }
     .classic-card { flex-direction: column; }
@@ -1211,6 +1227,28 @@ article table tr:nth-child(even),
     
     .recent-news-text { flex-grow: 1 !important; }
 
+    /* Layout Page Sidebar & Post Responsif Mobile */
+    .post-layout-wrapper,
+    .page-with-sidebar {
+        flex-direction: column !important;
+        align-items: center !important;
+        padding: 20px 16px !important;
+        gap: 1.5rem !important;
+    }
+
+    .post-layout-wrapper .post-single,
+    .page-with-sidebar .post-single,
+    .post-sidebar {
+        width: 100% !important;
+        max-width: 100% !important;
+        min-width: 0 !important;
+        position: static !important;
+    }
+
+    .post-sidebar {
+        margin-top: 2rem;
+    }
+
     /* Table Mobile Responsive */
     .content table,
     article table,
@@ -1257,85 +1295,5 @@ article table tr:nth-child(even),
     .bento-tall,
     .bento-big {
         grid-row: span 2 !important;
-    }
-}
-
-/* ==========================================================================
-   FIX LAYOUT POST-LAYOUT-WRAPPER (AGAR SIDEBAR DI SAMPING KANAN)
-   ========================================================================== */
-/* ==========================================================================
-   LAYOUT SINGLE POST (ARTIKEL TERANGKUL DI TENGAH & LUAS + IKLAN DI KANAN)
-   ========================================================================== */
-
-/* Pembungkus Utama Layout */
-.post-layout-wrapper {
-    display: flex !important;
-    flex-direction: row !important;
-    justify-content: center !important; /* Memusatkan seluruh komponen ke tengah */
-    align-items: flex-start !important;
-    gap: 40px !important;               /* Jarak ideal antara artikel dan iklan */
-    max-width: 1320px !important;       /* Wadah lebih luas sejajar dengan header/navbar */
-    width: 100% !important;
-    margin: 0 auto !important;
-    padding: 30px 24px !important;      /* Padding menyesuaikan margin layar */
-    box-sizing: border-box !important;
-}
-
-/* Sembunyikan spacer kiri agar tidak memakan space */
-.post-layout-wrapper .layout-spacer {
-    display: none !important;
-}
-
-/* Artikel Utama (Memberikan Space Luas & Lega) */
-.post-layout-wrapper .post-single {
-    flex: 1 1 auto !important;          /* Mengisi sisa ruang yang tersedia di kiri-tengah */
-    width: 100% !important;
-    max-width: 860px !important;        /* Lebar artikel jauh lebih luas (tabel warta tidak sesak) */
-    min-width: 0 !important;            /* Mencegah gambar/tabel memecah flexbox */
-}
-
-/* Sidebar Iklan Kanan (Menempel Rapi di Sebelah Kanan) */
-.post-layout-wrapper .post-sidebar {
-    width: 300px !important;
-    min-width: 300px !important;
-    max-width: 300px !important;
-    flex-shrink: 0 !important;
-    display: block !important;
-}
-
-/* Opsional: Efek Sticky agar Iklan Tetap Ikut Saat Artikel Di-scroll */
-.post-layout-wrapper .post-sidebar {
-    position: sticky;
-    top: 24px;
-}
-
-/* 5. Styling Gambar Iklan dalam Sidebar */
-.post-sidebar img,
-.sidebar-ad-item img {
-    width: 100% !important;
-    height: auto !important;
-    display: block !important;
-    object-fit: contain;
-    border-radius: 8px;
-}
-
-/* 6. Responsif Layar Mobile / Tablet */
-@media (max-width: 1024px) {
-    .post-layout-wrapper .layout-spacer {
-        display: none !important; /* Sembunyikan spacer saat layar mengecil */
-    }
-}
-
-@media (max-width: 768px) {
-    .post-layout-wrapper {
-        flex-direction: column !important;
-        align-items: center;
-    }
-    
-    .post-layout-wrapper .post-single,
-    .post-layout-wrapper .post-sidebar {
-        width: 100% !important;
-        max-width: 100% !important;
-        min-width: 0 !important;
     }
 }
