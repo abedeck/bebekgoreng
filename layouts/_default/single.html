@@ -1,5 +1,5 @@
 {{ define "main" }}
-  <!-- 1. Schema Markup JSON-LD untuk SEO Google Rich Snippet -->
+  <!-- Schema Markup JSON-LD untuk SEO Google Rich Snippet -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -25,11 +25,11 @@
   }
   </script>
 
-  <!-- 2. Container Layout Utama (Artikel + Sidebar) -->
-  <div class="post-layout-container" style="display: flex; gap: 2rem; align-items: flex-start; max-width: 1200px; margin: 0 auto;">
+  <!-- Container Utama dengan Grid / Layout Tiga Kolom Seimbang -->
+  <div class="page-with-sidebar">
     
-    <!-- Kolom Artikel Utama -->
-    <article class="post-single" style="flex: 1; min-width: 0;">
+    <!-- Area Artikel (Batas Maksimal & Tetap Di Tengah) -->
+    <article class="post-single">
 
       {{ with .Params.cover }}
         <div class="post-cover">
@@ -92,8 +92,8 @@
 
     </article>
 
-    <!-- Kolom Sidebar Iklan -->
-    <aside class="post-sidebar" style="width: 300px; flex-shrink: 0; position: sticky; top: 2rem;">
+    <!-- Kolom Sidebar Iklan (Samping Kanan) -->
+    <aside class="post-sidebar">
       {{ partial "sidebar-ads.html" . }}
     </aside>
 

@@ -1198,6 +1198,50 @@ article table tr:nth-child(even),
 .post-content table tr:nth-child(even) {
   background-color: #f9f9f9;
 }
+/* ==========================================================================
+   SIDEBAR LAYOUT (POST + ADS) — HUGO + DECAP CMS
+   ========================================================================== */
+
+/* Container Utama */
+.page-with-sidebar {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 2.5rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+/* Artikel Utama - Terkunci Presisi di Tengah */
+.post-single {
+  flex: 1;
+  max-width: 780px; /* Lebar optimal agar mata nyaman membaca */
+  width: 100%;
+}
+
+/* Sidebar Iklan - Mengambang Samping Kanan */
+.post-sidebar {
+  width: 300px;
+  flex-shrink: 0;
+  position: sticky;
+  top: 2rem; /* Iklan menempel di layar saat di-scroll */
+}
+
+/* Tampilan Layar HP / Tablet (Maks 1024px) */
+@media (max-width: 1024px) {
+  .page-with-sidebar {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .post-sidebar {
+    width: 100%;
+    max-width: 780px;
+    position: static;
+    margin-top: 2rem;
+  }
+}
 
 @media screen and (max-width: 768px) {
   .content table,
