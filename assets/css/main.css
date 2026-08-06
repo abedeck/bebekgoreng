@@ -1,73 +1,76 @@
-/* @import url("/css/hero-header.css");
-@import url("/css/split-section.css"); */
-/* --- 1. Reset & Layout Dasar --- */
+/* ==========================================================================
+   1. RESET & BASE STYLES
+   ========================================================================== */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
-/* Tambahkan scroll-behavior di sini */
+
 html {
     scroll-behavior: smooth;
 }
+
 html, body {
-    
     min-height: 100vh;
     background-color: #f5f5f5;
     color: #000000;
-     overflow-x: hidden;
 }
-/* Tambahkan ini, ganti cara lama yang pakai document.body.style.overflow */
+
+body {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: clip; /* Aman untuk position: sticky */
+}
+
+/* Mengunci Scroll saat Menu Mobile Terbuka */
 html.nav-open,
 html.nav-open body {
     overflow: hidden;
 }
-body {
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    -webkit-font-smoothing: antialiased; /* Membuat font terlihat lebih tajam dan halus di Mac/iOS */
-    -moz-osx-font-smoothing: grayscale;
-    
-}
 
-/* Dikembalikan ke default: Membiarkan main memanjang alami tanpa memaksakan grid global */
 body > main {
     display: block;
     width: 100%;
-    padding-top: 80px; /* Sesuaikan dengan tinggi navbar kamu */
+    padding-top: 80px;
 }
 
 a {
     text-decoration: none;
     color: inherit;
 }
-.navbar-wrapper.header-hidden {
-  transform: translateY(-100%);
-}
+
+/* ==========================================================================
+   2. NAVIGATION (NAVBAR & MOBILE MENU)
+   ========================================================================== */
 .navbar-wrapper {
-   position: fixed;
+    position: fixed;
     top: 0;
     width: 100%;
     background-color: #f5f5f5; 
-    z-index: 1005;             
-    /* Menghilangkan sela/jarak margin yang tidak diinginkan */
+    z-index: 1005;
     margin: 0;
     transition: transform 0.3s ease-in-out;
 }
+
+.navbar-wrapper.header-hidden,
 .navbar-wrapper.hide-on-scroll {
     transform: translateY(-100%);
 }
-/* --- 2. Perbaikan Navigasi (Sticky Sempurna & Rapi) --- */
+
 .navbar {
-    /* Hapus position sticky di sini karena sudah dipindahkan ke .navbar-wrapper */
     display: flex;
     justify-content: space-between;
-    align-items: start;
+    align-items: flex-start;
     padding: 35px 4% 20px 4%; 
     font-size: 14px;
     letter-spacing: -0.02em;
     width: 100%;
     background-color: #f5f5f5;
+    position: relative;
 }
+
 .nav-left {
     line-height: 1.4;
     color: #888888;
@@ -83,7 +86,6 @@ a {
     font-weight: 700;
     letter-spacing: -0.04em;
     color: #000000;
-    /* --- Trik Utama Centering Absolut --- */
     position: absolute;
     left: 50%;
     top: 50%;
@@ -106,7 +108,7 @@ a {
     opacity: 0.5;
 }
 
-/* --- Menu Mobile Hamburger --- */
+/* Hamburger Toggle */
 .menu-toggle {
     display: none;
     flex-direction: column;
@@ -117,7 +119,7 @@ a {
     border: none;
     cursor: pointer;
     position: relative;
-    z-index: 1002; /* di atas .mobile-nav (1001) supaya tetap keliatan & bisa diklik saat menu terbuka */
+    z-index: 1002;
     padding: 0;
 }
 
@@ -125,10 +127,10 @@ a {
     width: 100%;
     height: 2px;
     background-color: #000;
-    transition: 0.3s;
+    transition: transform 0.3s ease;
     transform-origin: center;
 }
-/* Animasi hamburger jadi X saat menu terbuka */
+
 .menu-toggle.active span:nth-child(1) {
     transform: translateY(6px) rotate(45deg);
 }
@@ -162,34 +164,31 @@ a {
     visibility: visible;
 }
 
-/* --- 3. Hero Container (Mengunci Tinggi Bersih Sisa Layar) --- */
+/* ==========================================================================
+   3. HERO SECTION & GALLERY
+   ========================================================================== */
 .hero-container {
     display: flex;
     flex-direction: column;
-    justify-content: space-between; /* Menjaga galeri di tengah, footer mepet bawah */
-    
-    /* MENGGUNCI TINGGI BERSIH: Tinggi layar dikurangi estimasi tinggi navbar agar footer tidak terpotong */
+    justify-content: space-between;
     height: calc(100vh - 85px);
     min-height: calc(100vh - 85px);
-    
     width: 100%;
     padding: 0 4%; 
     position: relative;
-    box-sizing: border-box;
 }
 
-/* --- 4. Proporsi Editorial Galeri Gambar Tengah --- */
 .gallery-wrapper {
     width: 100%;
-    max-width: 55%; /* Ukuran minimalis elegan terinspirasi dari Amomento */
-    margin: auto auto; /* Otomatis menyeimbangkan posisi di tengah-tengah sisa layar */
+    max-width: 55%;
+    margin: auto auto;
 }
 
 .gallery-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 24px; 
-    align-items: start  ;
+    align-items: start;
 }
 
 .gallery-item {
@@ -215,7 +214,6 @@ a {
 .img-wrapper:hover img { transform: scale(1.03); }
 .item-bw img { filter: grayscale(100%); }
 
-/* --- Caption Desktop --- */
 .item-caption {
     font-size: 12px;
     margin-top: 10px;
@@ -226,30 +224,30 @@ a {
 .caption-right { align-self: flex-end; }
 .caption-main { display: none; }
 
-/* --- 5. Footer Hero (Mepet Bawah Layar Pertama Secara Presisi) --- */
 .hero-footer {
     width: 100%;
-    margin-top: 30px; /* Jarak antara gambar bawah dengan teks footer */
+    margin-top: 30px;
     margin-bottom: 20px;
 }
 
 .footer-content-wrapper {
     display: flex;
-    justify-content: space-between; /* Menendang teks ke kiri, tombol ke kanan */
-    align-items: center;            /* Rata tengah secara vertikal */
-    width: 100%;                    /* Mengikuti lebar penuh 55% dari gallery-wrapper */
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
 }
 
 .footer-text-left {
-    max-width: 25%;                 /* Agar teks deskripsi tidak menabrak tombol */
+    max-width: 25%;
     text-align: left;
-    font-size: 14px;                /* Menyesuaikan estetik minimalis Amomento */
+    font-size: 14px;
     line-height: 1.5;
 }
 
 .footer-btn-right {
-    white-space: nowrap;            /* Mencegah tombol patah jadi dua baris */
+    white-space: nowrap;
 }
+
 .footer-text p {
     font-size: 14px;
     line-height: 1.5;
@@ -264,174 +262,55 @@ a {
     text-underline-offset: 4px;
     font-weight: 600;
 }
-/* ======================================================= */
-/* RESPONSIVE LAYOUT (MODE MOBILE & TABLET)                */
-/* ======================================================= */
 
-@media (max-width: 1024px) {
-    .caption-main { display: none; }
-    .gallery-wrapper { max-width: 75%; }
-}
-
-@media (max-width: 768px) {
-    .nav-right { display: none; }
-    .nav-left { display: none; }
-    .brand-logo {
-        left: 1rem;            /* Geser ke rata kiri (sesuaikan margin/padding yang kamu mau) */
-        transform: translateY(-50%); /* HANYA memosisikan vertikal tengah, horizontalnya rata kiri */
-    }
-    .menu-toggle { 
-        display: flex;
-        position: absolute;
-        right: 4%;
-        top: 50%;
-        transform: translateY(-50%);
-    }
-    body > main {
-        padding-top: 60px !important; /* Dari 80px dikurangi jadi 60px */
-    }
-    .split-section {
-        padding: 45px 4% !important; /* Dari 95px dipangkas jadi 40px saja agar lebih naik */
-    }
-    .hero-container {
-        height: auto !important; /* Membebaskan tinggi kontainer agar mengikuti panjang teks */
-        min-height: min-content;
-        padding-bottom: 30px !important; /* Memberikan ruang napas di bawah deskripsi */
-    }
-
-    .gallery-wrapper {
-        max-width: 100%;
-        padding: 0 10px;
-        margin: 40px 0; 
-    }
-
-    .gallery-grid { 
-        grid-template-columns: 1fr;
-        gap: 0px; 
-    }
-
-    .item-side { display: none; }
-    .item-main { width: 100%; }
-    /* Mengubah rasio gambar menjadi tinggi di mobile */
-    .img-wrapper {
-        aspect-ratio: 3 / 4; /* Silakan ganti ke 2/3 atau 9/16 sesuai seleramu */
-    }
-
-    /* Pastikan gambar di dalamnya tetap terpotong rapi dan tidak gepeng */
-    .img-wrapper img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-    }
-
-    .caption-main {
-        display: flex;             
-        justify-content: space-between; 
-        width: 100%;
-        font-weight: 600;
-        font-size: 14px;
-        margin-top: 15px;
-    }
-   /* 1. Struktur menumpuk ke bawah */
-    .footer-content-wrapper {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 24px;
-    }
-
-    .footer-text-left {
-        max-width: 100%;
-        font-size: 13px;
-    }
-
-    .all-works-btn {
-        font-size: 18px;
-        letter-spacing: 0.5px;
-        text-underline-offset: 6px;
-        display: inline-flex;
-        align-items: center;
-        gap: 6px;
-    }
-    
-    /* 4. Paksa mentok ke bawah halaman */
-    .hero-footer {
-        margin-top: 24px;
-        margin-bottom: 0 !important; /* Nol-kan margin bawah */
-        padding-bottom: 0 !important; /* Nol-kan padding bawaan jika ada */
-    }
-
-    /* Pastikan juga kontainer paling luar tidak menahan jarak */
-    .hero-container, .gallery-wrapper {
-        padding-bottom: 0 !important;
-        margin-bottom: 0 !important;
-    }
-}
-
-@media (max-width: 600px) {
-    .navbar { align-items: start; }
-    .nav-left { display: none; }
-    
-}
-
-/* assets/css/split-section.css */
-
+/* ==========================================================================
+   4. SPLIT SECTION
+   ========================================================================== */
 .split-section {
     width: 100%;
-    
-    /* KUNCI 1: Mengunci tinggi section tepat 100% tinggi layar */
     height: 100vh;
     min-height: 100vh;
-    
-    /* Mengurangi padding atas-bawah agar tidak mendorong konten keluar layar */
     padding: 95px 4%; 
-    box-sizing: border-box;
-    background-color: #f5f5f5 ;
-    
-    /* KUNCI 2: Memastikan container di dalamnya mengikuti tinggi section ini */
+    background-color: #f5f5f5;
     display: flex;
     align-items: center; 
 }
 
 .split-container {
     display: grid;
-    grid-template-columns: 1.2fr 1fr; /* Kolom teks sedikit lebih lebar dari kolom gambar */
-    gap: 8%; /* Ruang kosong lebar di tengah */
+    grid-template-columns: 1.2fr 1fr;
+    gap: 8%;
     align-items: stretch;
     width: 100%;
-    height: 100%; /* Memaksa grid mengisi penuh tinggi padding split-section */
+    height: 100%;
     max-width: 100%;
     margin: 0 auto;
 }
 
-/* --- KIRI: Pengaturan Kolom Teks --- */
 .split-text-col {
     display: flex;
     flex-direction: column;
-    justify-content: space-between; /* Menyebar konten ke atas (header), tengah (grid), bawah (footer) */
-    padding-right: 10%; /* White space ekstra di dalam kolom teks */
+    justify-content: space-between;
+    padding-right: 10%;
     height: 100%;
 }
 
-/* Tipografi Global untuk Metadata */
 .split-text-col span, 
 .split-text-col p,
 .split-text-col a {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    text-transform: uppercase; /* Semua teks otomatis menjadi huruf kapital */
-    letter-spacing: 0.08em;    /* Jarak renggang antar huruf khas high-fashion */
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
     color: #000000;
 }
 
-/* Header: Brand & Season */
 .meta-header {
     display: flex;
     justify-content: space-between;
     font-size: 13px;
     font-weight: 500;
-    /* Menghapus margin-bottom statis yang besar agar flex-space yang bekerja */
 }
 
-/* Label Abu-Abu Halus (LOCATION, DATE, CONTACT) */
 .meta-label {
     display: block;
     font-size: 11px;
@@ -439,12 +318,10 @@ a {
     margin-bottom: 15px;
 }
 
-/* Grid Tengah */
 .meta-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 30px;
-    /* Menghapus margin-bottom statis agar flexbox membagi ruang secara otomatis */
 }
 
 .meta-value {
@@ -460,7 +337,6 @@ a {
     color: #555555;
 }
 
-/* Footer Kontak */
 .meta-footer .meta-value {
     font-size: 13px;
     line-height: 1.8;
@@ -468,11 +344,10 @@ a {
 
 .meta-link {
     text-decoration: none;
-    border-bottom: 1px solid #000000; /* Garis bawah tipis pada link */
+    border-bottom: 1px solid #000000;
     padding-bottom: 2px;
 }
 
-/* --- KANAN: Pengaturan Kolom Gambar --- */
 .split-image-col {
     width: 100%;
     height: 100%;
@@ -483,10 +358,9 @@ a {
 
 .split-img-wrapper {
     width: 100%;
-    /* Menggunakan max-height agar gambar portrait tidak dipaksa melebihi tinggi container layar */
     height: 100%;
     max-height: 80vh; 
-    aspect-ratio: 3 / 4; /* Rasio potret (portrait) sempurna */
+    aspect-ratio: 3 / 4;
     overflow: hidden;
     background-color: #f5f5f5;
 }
@@ -497,45 +371,17 @@ a {
     object-fit: cover;
 }
 
-/* ======================================================= */
-/* RESPONSIVE LAYOUT (MODE MOBILE)                         */
-/* ======================================================= */
-
-@media (max-width: 900px) {
-    .split-section {
-        height: auto; /* Bebaskan tinggi di mobile agar teks dan gambar bisa di-scroll alami */
-        min-height: min-content;
-        padding: 100px 4%;
-    }
-
-    .split-container {
-        grid-template-columns: 1fr; /* Runtuh menjadi 1 kolom */
-        gap: 40px;
-        height: auto;
-    }
-    
-    .split-text-col {
-        padding-right: 0;
-        gap: 40px; /* Beri jarak antar section teks saat ditumpuk */
-    }
-    
-    .split-img-wrapper {
-        max-height: 60vh; /* Gambar mengecil proporsional di mobile */
-    }
-}
-
-/* =========================================
-   POST ARTICLE — SIMPLE EDITORIAL LAYOUT
-   Tambahkan blok ini ke main.css kamu
-   ========================================= */
-
+/* ==========================================================================
+   5. SINGLE POST ARTICLE
+   ========================================================================== */
 .post-single {
     max-width: 720px;
     margin: 0 auto;
     padding: 2rem 1.5rem 4rem;
+    width: 100%;
+    min-width: 0;
 }
 
-/* --- Cover Image --- */
 .post-cover {
     margin: 0 -1.5rem 2rem;
 }
@@ -547,18 +393,6 @@ a {
     display: block;
 }
 
-@media (min-width: 768px) {
-    .post-cover {
-        margin: 0 0 2.5rem;
-        border-radius: 12px;
-        overflow: hidden;
-    }
-    .post-cover img {
-        height: 480px;
-    }
-}
-
-/* --- Header --- */
 .post-header {
     margin-bottom: 2.5rem;
 }
@@ -581,12 +415,6 @@ a {
     color: #111;
 }
 
-@media (min-width: 768px) {
-    .post-title {
-        font-size: 2.75rem;
-    }
-}
-
 .post-meta {
     font-size: 0.9rem;
     color: #777;
@@ -596,20 +424,15 @@ a {
     flex-wrap: wrap;
 }
 
-.post-meta-separator {
-    color: #ccc;
-}
+.post-meta-separator { color: #ccc; }
 
-/* --- Content --- */
 .post-content {
     font-size: 1.05rem;
     line-height: 1.75;
     color: #222;
 }
 
-.post-content p {
-    margin: 0 0 1.5rem;
-}
+.post-content p { margin: 0 0 1.5rem; }
 
 .post-content h2 {
     font-size: 1.5rem;
@@ -644,9 +467,7 @@ a {
     padding-left: 1.5rem;
 }
 
-.post-content li {
-    margin-bottom: 0.5rem;
-}
+.post-content li { margin-bottom: 0.5rem; }
 
 .post-content code {
     background: #f4f4f4;
@@ -669,7 +490,6 @@ a {
     padding: 0;
 }
 
-/* Gambar di dalam artikel (hasil dari ![alt](gambar.jpg)) */
 .post-content img {
     max-width: 100%;
     height: auto;
@@ -678,9 +498,7 @@ a {
     border-radius: 8px;
 }
 
-.post-content figure {
-    margin: 2rem 0;
-}
+.post-content figure { margin: 2rem 0; }
 
 .post-content figcaption {
     text-align: center;
@@ -689,7 +507,39 @@ a {
     margin-top: 0.5rem;
 }
 
-/* --- Tags --- */
+/* Tabel Markdown Artikel */
+.content table,
+article table,
+.post-content table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1.5rem 0;
+}
+
+.content table th,
+.content table td,
+article table th,
+article table td,
+.post-content table th,
+.post-content table td {
+    border: 1px solid #e2e8f0;
+    padding: 10px 14px;
+    text-align: left;
+}
+
+.content table th,
+article table th,
+.post-content table th {
+    background-color: #f8fafc;
+    font-weight: 600;
+}
+
+.content table tr:nth-child(even),
+article table tr:nth-child(even),
+.post-content table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
 .post-tags {
     margin-top: 3rem;
     padding-top: 1.5rem;
@@ -713,7 +563,6 @@ a {
     color: #fff;
 }
 
-/* --- Prev/Next Navigation --- */
 .post-nav {
     margin-top: 3rem;
     padding-top: 2rem;
@@ -749,20 +598,8 @@ a {
     color: #111;
 }
 
-/* --- Mobile fine-tuning --- */
-@media (max-width: 480px) {
-    .post-title {
-        font-size: 1.6rem;
-    }
-    .post-content {
-        font-size: 1rem;
-    }
-}
-
-/* news */
-.meta-grid-bottom {
-    margin-top: 2.5rem;
-}
+/* Recent News Component */
+.meta-grid-bottom { margin-top: 2.5rem; }
 
 .recent-news-list {
     list-style: none;
@@ -824,9 +661,7 @@ a {
     line-height: 1.3;
 }
 
-.recent-news-link:hover .recent-news-title {
-    color: #a08c2b;
-}
+.recent-news-link:hover .recent-news-title { color: #a08c2b; }
 
 .recent-news-desc {
     font-size: 0.78rem;
@@ -844,9 +679,469 @@ a {
     color: #999;
     margin-top: 0.1rem;
 }
-/* Responsive untuk layar Mobile (HP) */
-@media screen and (max-width: 768px) {
-    /* Mengubah grid menjadi flexbox vertikal */
+
+/* ==========================================================================
+   6. PAGE WITH SIDEBAR (LAYOUT PERBAIKAN PRESISI)
+   ========================================================================== */
+.page-with-sidebar {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 2.5rem;
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+}
+
+.post-sidebar {
+    width: 300px;
+    flex-shrink: 0;
+    position: sticky;
+    top: 2rem;
+}
+
+/* ==========================================================================
+   7. CLASSIC BLOG & SIDEBAR WIDGETS
+   ========================================================================== */
+.classic-blog-container {
+    max-width: 1140px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    color: #555;
+}
+
+.blog-header-section {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.page-title {
+    font-size: 2rem;
+    color: #222;
+    margin-bottom: 8px;
+    font-weight: 700;
+}
+
+.breadcrumb {
+    font-size: 0.85rem;
+    color: #888;
+}
+
+.breadcrumb a {
+    color: #888;
+    text-decoration: none;
+}
+
+.blog-layout-grid {
+    display: grid;
+    grid-template-columns: 1fr 300px;
+    gap: 40px;
+}
+
+.post-list-classic {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.classic-card {
+    display: flex;
+    background: #f9f9f9;
+    border-radius: 4px;
+    overflow: hidden;
+    padding: 20px;
+    gap: 20px;
+    align-items: flex-start;
+}
+
+.card-media {
+    position: relative;
+    width: 160px;
+    height: 160px;
+    flex-shrink: 0;
+}
+
+.card-media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 2px;
+}
+
+.category-badge {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: rgba(0, 0, 0, 0.6);
+    color: #fff;
+    font-size: 0.7rem;
+    padding: 3px 8px;
+    text-transform: uppercase;
+    border-radius: 2px;
+}
+
+.card-body { flex: 1; }
+
+.card-title {
+    font-size: 1.25rem;
+    margin: 0 0 6px 0;
+    font-weight: 700;
+}
+
+.card-title a {
+    color: #222;
+    text-decoration: none;
+}
+
+.card-title a:hover { color: #0073aa; }
+
+.card-meta {
+    font-size: 0.8rem;
+    color: #999;
+    margin-bottom: 12px;
+}
+
+.card-excerpt {
+    font-size: 0.9rem;
+    line-height: 1.6;
+    color: #666;
+    margin-bottom: 14px;
+}
+
+.view-details-btn {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #333;
+    text-decoration: none;
+}
+
+.view-details-btn:hover { color: #0073aa; }
+
+.pagination-wrapper {
+    margin-top: 40px;
+    text-align: center;
+}
+
+.pagination {
+    display: inline-flex;
+    list-style: none;
+    gap: 12px;
+    padding: 0;
+}
+
+.pagination a, .pagination span {
+    color: #666;
+    text-decoration: none;
+    font-size: 0.9rem;
+}
+
+.pagination .active a {
+    color: #0073aa;
+    font-weight: bold;
+    border-bottom: 2px solid #0073aa;
+}
+
+.sidebar-area {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+}
+
+.widget-title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #222;
+    margin-bottom: 16px;
+    text-transform: capitalize;
+}
+
+.recent-posts-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.recent-post-item {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+.recent-thumb {
+    width: 50px;
+    height: 50px;
+    flex-shrink: 0;
+}
+
+.recent-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 2px;
+}
+
+.recent-info h4 {
+    font-size: 0.85rem;
+    margin: 0 0 4px 0;
+    line-height: 1.3;
+}
+
+.recent-info h4 a {
+    color: #333;
+    text-decoration: none;
+}
+
+.recent-info time {
+    font-size: 0.75rem;
+    color: #aaa;
+}
+
+.widget-categories ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.widget-categories li {
+    display: flex;
+    justify-content: space-between;
+    padding: 6px 0;
+    font-size: 0.85rem;
+    border-bottom: 1px dashed #eee;
+}
+
+.widget-categories a {
+    color: #555;
+    text-decoration: none;
+}
+
+.cat-count { color: #aaa; }
+
+.projects-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+}
+
+.project-grid-item {
+    aspect-ratio: 1;
+    overflow: hidden;
+    border-radius: 2px;
+}
+
+.project-grid-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.2s;
+}
+
+.project-grid-item img:hover { transform: scale(1.05); }
+
+/* ==========================================================================
+   8. BENTO GRID PHOTO GALLERY
+   ========================================================================== */
+.bento-gallery-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-auto-rows: 250px;
+    gap: 16px;
+    margin: 2.5rem 0;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.bento-item {
+    position: relative;
+    overflow: hidden;
+    border-radius: 16px;
+    background-color: #f0f0f0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), 
+                box-shadow 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.bento-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.bento-item:hover { box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12); }
+.bento-item:hover img { transform: scale(1.04); }
+
+.bento-normal { grid-column: span 1; grid-row: span 1; }
+.bento-wide   { grid-column: span 2; grid-row: span 1; }
+.bento-tall   { grid-column: span 1; grid-row: span 2; }
+.bento-big    { grid-column: span 2; grid-row: span 2; }
+
+/* ==========================================================================
+   9. ANIMATION STYLES
+   ========================================================================== */
+.animate-hero {
+    opacity: 0;
+    transform: translateY(25px);
+    animation: heroFadeIn 1.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes heroFadeIn {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.delay-1 { animation-delay: 0.1s; }
+.delay-2 { animation-delay: 0.25s; }
+.delay-3 { animation-delay: 0.4s; }
+.delay-4 { animation-delay: 0.6s; }
+
+/* ==========================================================================
+   10. MEDIA QUERIES & RESPONSIVE DESIGN (KONSOLIDASI)
+   ========================================================================== */
+
+/* Laptop / Desktop Kecil (<= 1280px) */
+@media (max-width: 1280px) {
+    .page-with-sidebar {
+        flex-direction: row;
+        justify-content: center;
+    }
+}
+
+/* Tablet Landscape (<= 1024px) */
+@media (max-width: 1024px) {
+    .caption-main { display: none; }
+    .gallery-wrapper { max-width: 75%; }
+}
+
+/* Tablet Portrait & HP Lebar (<= 900px) */
+@media (max-width: 900px) {
+    .split-section {
+        height: auto;
+        min-height: min-content;
+        padding: 100px 4%;
+    }
+
+    .split-container {
+        grid-template-columns: 1fr;
+        gap: 40px;
+        height: auto;
+    }
+    
+    .split-text-col {
+        padding-right: 0;
+        gap: 40px;
+    }
+    
+    .split-img-wrapper { max-height: 60vh; }
+
+    .page-with-sidebar {
+        flex-direction: column;
+        align-items: center;
+        gap: 1.5rem;
+    }
+    
+    .post-sidebar {
+        width: 100%;
+        position: static;
+        margin-top: 2rem;
+    }
+}
+
+/* Tablet Standar & Mobile Layout (<= 850px) */
+@media (max-width: 850px) {
+    .blog-layout-grid { grid-template-columns: 1fr; }
+    .classic-card { flex-direction: column; }
+    .card-media {
+        width: 100%;
+        height: 200px;
+    }
+}
+
+/* Mobile Utama (<= 768px) */
+@media (max-width: 768px) {
+    .nav-right, .nav-left { display: none; }
+
+    .brand-logo {
+        left: 1rem;
+        transform: translateY(-50%);
+    }
+
+    .menu-toggle { 
+        display: flex;
+        position: absolute;
+        right: 4%;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+
+    body > main { padding-top: 60px !important; }
+
+    .split-section { padding: 45px 4% !important; }
+
+    .hero-container {
+        height: auto !important;
+        min-height: min-content;
+        padding-bottom: 0 !important;
+        margin-bottom: 0 !important;
+    }
+
+    .gallery-wrapper {
+        max-width: 100%;
+        padding: 0 10px;
+        margin: 40px 0 0 0 !important;
+        padding-bottom: 0 !important;
+    }
+
+    .gallery-grid { 
+        grid-template-columns: 1fr;
+        gap: 0px; 
+    }
+
+    .item-side { display: none; }
+    .item-main { width: 100%; }
+
+    .img-wrapper { aspect-ratio: 3 / 4; }
+
+    .caption-main {
+        display: flex; 
+        justify-content: space-between; 
+        width: 100%;
+        font-weight: 600;
+        font-size: 14px;
+        margin-top: 15px;
+    }
+
+    .footer-content-wrapper {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 24px;
+    }
+
+    .footer-text-left {
+        max-width: 100%;
+        font-size: 13px;
+    }
+
+    .all-works-btn {
+        font-size: 18px;
+        letter-spacing: 0.5px;
+        text-underline-offset: 6px;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+    }
+    
+    .hero-footer {
+        margin-top: 24px;
+        margin-bottom: 0 !important;
+        padding-bottom: 0 !important;
+    }
+
+    /* Meta Grid & News Order Swap */
     .meta-grid, 
     .meta-grid-bottom {
         display: flex !important;
@@ -854,534 +1149,64 @@ a {
         gap: 2rem !important;
     }
 
-    /* TRIK TUKAR POSISI DI MOBILE */
-    .group-news {
-        order: 1 !important; /* Naik ke atas */
-    }
-    
-    .group-contact {
-        order: 2 !important; /* Turun ke bawah Recent News */
-    }
+    .group-news { order: 1 !important; }
+    .group-contact { order: 2 !important; }
 
-    /* Penyesuaian agar text penuh dan tidak terpotong */
     .split-text-col {
         padding: 1.5rem !important;
         width: 100% !important;
-        box-sizing: border-box !important;
     }
 
     .recent-news-list,
-    .recent-news-link {
-        width: 100% !important;
-    }
+    .recent-news-link { width: 100% !important; }
     
-    .recent-news-text {
-        flex-grow: 1 !important;
+    .recent-news-text { flex-grow: 1 !important; }
+
+    /* Table Mobile Responsive */
+    .content table,
+    article table,
+    .post-content table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+        -webkit-overflow-scrolling: touch;
     }
-}
 
-/* ANIMASI  */
-/* --- 1. Pengaturan Awal Efek Animasi --- */
-.animate-hero {
-    opacity: 0;
-    transform: translateY(25px); /* Posisi awal sedikit turun ke bawah */
-    animation: heroFadeIn 1.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-
-/* --- 2. Timeline Gerakan (Keyframes) --- */
-@keyframes heroFadeIn {
-    to {
-        opacity: 1;
-        transform: translateY(0); /* Kembali ke posisi semula sambil memudar pas */
+    /* Bento Grid Mobile */
+    .bento-gallery-container {
+        grid-template-columns: repeat(2, 1fr);
+        grid-auto-rows: 200px;
+        gap: 12px;
     }
+
+    .bento-wide, .bento-big { grid-column: span 2; }
+
+    .post-cover img { height: 380px; }
+    .post-title { font-size: 2.25rem; }
 }
 
-/* --- 3. Pengatur Jeda Waktu Berurutan (Stagger Delay) --- */
-.delay-1 { animation-delay: 0.1s; } /* Gambar kiri */
-.delay-2 { animation-delay: 0.25s; } /* Gambar tengah */
-.delay-3 { animation-delay: 0.4s; } /* Gambar kanan */
-.delay-4 { animation-delay: 0.6s; } /* Teks footer bawah */
-
-
-/* Container Utama */
-.classic-blog-container {
-  max-width: 1140px;
-  margin: 0 auto;
-  padding: 40px 20px;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  color: #555;
-}
-
-/* Header & Breadcrumb */
-.blog-header-section {
-  text-align: center;
-  margin-bottom: 40px;
-}
-.page-title {
-  font-size: 2rem;
-  color: #222;
-  margin-bottom: 8px;
-  font-weight: 700;
-}
-.breadcrumb {
-  font-size: 0.85rem;
-  color: #888;
-}
-.breadcrumb a {
-  color: #888;
-  text-decoration: none;
-}
-
-/* Layout 2 Kolom Grid */
-.blog-layout-grid {
-  display: grid;
-  grid-template-columns: 1fr 300px;
-  gap: 40px;
-}
-
-/* --- Kartu Artikel (Kolom Kiri) --- */
-.post-list-classic {
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-}
-
-.classic-card {
-  display: flex;
-  background: #f9f9f9; /* Background abu-abu terang sesuai gambar */
-  border-radius: 4px;
-  overflow: hidden;
-  padding: 20px;
-  gap: 20px;
-  align-items: flex-start;
-}
-
-.card-media {
-  position: relative;
-  width: 160px;
-  height: 160px;
-  flex-shrink: 0;
-}
-
-.card-media img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 2px;
-}
-
-.category-badge {
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  background: rgba(0, 0, 0, 0.6);
-  color: #fff;
-  font-size: 0.7rem;
-  padding: 3px 8px;
-  text-transform: uppercase;
-  border-radius: 2px;
-}
-
-.card-body {
-  flex: 1;
-}
-
-.card-title {
-  font-size: 1.25rem;
-  margin: 0 0 6px 0;
-  font-weight: 700;
-}
-
-.card-title a {
-  color: #222;
-  text-decoration: none;
-}
-
-.card-title a:hover {
-  color: #0073aa;
-}
-
-.card-meta {
-  font-size: 0.8rem;
-  color: #999;
-  margin-bottom: 12px;
-}
-
-.card-excerpt {
-  font-size: 0.9rem;
-  line-height: 1.6;
-  color: #666;
-  margin-bottom: 14px;
-}
-
-.view-details-btn {
-  font-size: 0.8rem;
-  font-weight: 600;
-  color: #333;
-  text-decoration: none;
-}
-
-.view-details-btn:hover {
-  color: #0073aa;
-}
-
-/* Pagination */
-.pagination-wrapper {
-  margin-top: 40px;
-  text-align: center;
-}
-.pagination {
-  display: inline-flex;
-  list-style: none;
-  gap: 12px;
-  padding: 0;
-}
-.pagination a, .pagination span {
-  color: #666;
-  text-decoration: none;
-  font-size: 0.9rem;
-}
-.pagination .active a {
-  color: #0073aa;
-  font-weight: bold;
-  border-bottom: 2px solid #0073aa;
-}
-
-/* --- SIDEBAR (Kolom Kanan) --- */
-.sidebar-area {
-  display: flex;
-  flex-direction: column;
-  gap: 32px;
-}
-
-.widget-title {
-  font-size: 1rem;
-  font-weight: 700;
-  color: #222;
-  margin-bottom: 16px;
-  text-transform: capitalize;
-}
-
-/* Widget Recent Posts */
-.recent-posts-list {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.recent-post-item {
-  display: flex;
-  gap: 12px;
-  align-items: center;
-}
-
-.recent-thumb {
-  width: 50px;
-  height: 50px;
-  flex-shrink: 0;
-}
-
-.recent-thumb img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 2px;
-}
-
-.recent-info h4 {
-  font-size: 0.85rem;
-  margin: 0 0 4px 0;
-  line-height: 1.3;
-}
-
-.recent-info h4 a {
-  color: #333;
-  text-decoration: none;
-}
-
-.recent-info time {
-  font-size: 0.75rem;
-  color: #aaa;
-}
-
-/* Widget Categories */
-.widget-categories ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.widget-categories li {
-  display: flex;
-  justify-content: space-between;
-  padding: 6px 0;
-  font-size: 0.85rem;
-  border-bottom: 1px dashed #eee;
-}
-
-.widget-categories a {
-  color: #555;
-  text-decoration: none;
-}
-
-.cat-count {
-  color: #aaa;
-}
-
-/* Widget Projects Grid */
-.projects-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 8px;
-}
-
-.project-grid-item {
-  aspect-ratio: 1;
-  overflow: hidden;
-  border-radius: 2px;
-}
-
-.project-grid-item img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.2s;
-}
-
-.project-grid-item img:hover {
-  transform: scale(1.05);
-}
-
-/* Responsif Mobile */
-@media (max-width: 850px) {
-  .blog-layout-grid {
-    grid-template-columns: 1fr;
-  }
-  .classic-card {
-    flex-direction: column;
-  }
-  .card-media {
-    width: 100%;
-    height: 200px;
-  }
-}
-
-/* Styling Tabel Markdown Hugo & Article */
-.content table,
-article table,
-.post-content table {
-  width: 100%;
-  border-collapse: collapse;
-  margin: 1.5rem 0;
-}
-
-.content table th,
-.content table td,
-article table th,
-article table td,
-.post-content table th,
-.post-content table td {
-  border: 1px solid #e2e8f0;
-  padding: 10px 14px;
-  text-align: left;
-}
-
-.content table th,
-article table th,
-.post-content table th {
-  background-color: #f8fafc;
-  font-weight: 600;
-}
-
-.content table tr:nth-child(even),
-article table tr:nth-child(even),
-.post-content table tr:nth-child(even) {
-  background-color: #f9f9f9;
-}
-/* ==========================================================================
-   SIDEBAR LAYOUT (POST + ADS) — PERBAIKAN PRESISI TENGAN
-   ========================================================================== */
-
-/* Container Utama Grid 3 Kolom (Spacer Kiri | Artikel Tengah | Sidebar Kanan) */
-.page-with-sidebar {
-  display: grid;
-  grid-template-columns: 300px minmax(0, 780px) 300px;
-  justify-content: center;
-  gap: 2.5rem;
-  max-width: 1440px;
-  margin: 0 auto;
-  padding: 0 1.5rem;
-}
-
-/* Kolom Semu / Spacer Kiri agar Artikel Tepat di Tengah Layar */
-.page-with-sidebar::before {
-  content: "";
-  display: block;
-}
-
-/* Artikel Utama - Dikunci Presisi */
-.post-single {
-  width: 100%;
-  min-width: 0; /* Mencegah tabel/gambar merusak layout grid */
-  margin: 0 auto;
-}
-
-/* Sidebar Iklan Kanan */
-.post-sidebar {
-  width: 300px;
-  flex-shrink: 0;
-  position: sticky;
-  top: 2rem;
-}
-
-/* Responsive Laptop Sedang & Tablet (<= 1280px) */
-@media (max-width: 1280px) {
-  .page-with-sidebar {
-    /* Sembunyikan spacer kiri, artikel mengambil sisa ruang kiri/tengah */
-    grid-template-columns: minmax(0, 1fr) 300px;
-  }
-  .page-with-sidebar::before {
-    display: none;
-  }
-}
-
-/* Responsive Mobile / HP (<= 900px) */
-@media (max-width: 900px) {
-  .page-with-sidebar {
-    grid-template-columns: 1fr; /* Satu kolom vertikal */
-    gap: 1.5rem;
-  }
-  
-  .post-sidebar {
-    width: 100%;
-    position: static;
-    margin-top: 2rem;
-  }
-}
-
-@media screen and (max-width: 768px) {
-  .content table,
-  article table,
-  .post-content table {
-    display: block;
-    overflow-x: auto;
-    white-space: nowrap;
-    -webkit-overflow-scrolling: touch;
-  }
-  .post-layout-container {
-    flex-direction: column !important;
-  }
-  .post-sidebar {
-    width: 100% !important;
-    position: static !important;
-    margin-top: 2rem;
-  }
-}
-
-/* ==========================================================================
-   BENTO GRID PHOTO GALLERY
-   Designed for Hugo + Decap CMS (Google Drive Image Integration)
-   ========================================================================== */
-
-/* 1. CONTAINER UTAMA */
-.bento-gallery-container {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr); /* 3 Kolom Utama Desktop */
-  grid-auto-rows: 250px;                 /* Tinggi default tiap baris */
-  gap: 16px;                             /* Jarak antar kartu foto */
-  margin: 2.5rem 0;
-  width: 100%;
-  box-sizing: border-box;
-}
-
-/* 2. BASE ITEM & GAMBAR */
-.bento-item {
-  position: relative;
-  overflow: hidden;
-  border-radius: 16px;                   /* Sudut membulat halus khas Bento UI */
-  background-color: #f0f0f0;             /* Color fallback saat gambar loading */
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-  transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), 
-              box-shadow 0.3s cubic-bezier(0.25, 1, 0.5, 1);
-}
-
-.bento-item img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;                     /* Memastikan foto ter-crop rapi tanpa gepeng */
-  display: block;
-  transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
-}
-
-/* Hover Effect */
-.bento-item:hover {
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
-}
-
-.bento-item:hover img {
-  transform: scale(1.04);                /* Zoom-in halus saat di-hover */
-}
-
-/* 3. VARIASI UKURAN GRID (Sesuai Option di Decap CMS) */
-
-/* Normal (1x1): 1 Kolom, 1 Baris */
-.bento-normal {
-  grid-column: span 1;
-  grid-row: span 1;
-}
-
-/* Wide / Landscape (2x1): Memanjang 2 Kolom ke samping */
-.bento-wide {
-  grid-column: span 2;
-  grid-row: span 1;
-}
-
-/* Tall / Portrait (1x2): Tinggi 2 Baris ke bawah */
-.bento-tall {
-  grid-column: span 1;
-  grid-row: span 2;
-}
-
-/* Big (2x2): Kotak Utama Besar 2 Kolom x 2 Baris */
-.bento-big {
-  grid-column: span 2;
-  grid-row: span 2;
-}
-
-/* 4. RESPONSIVE DESIGN (TABLET & MOBILE) */
-
-/* Tablet & HP Layar Lebar (<= 768px) */
-@media (max-width: 768px) {
-  .bento-gallery-container {
-    grid-template-columns: repeat(2, 1fr); /* Ubah ke 2 Kolom */
-    grid-auto-rows: 200px;
-    gap: 12px;
-  }
-
-  .bento-wide,
-  .bento-big {
-    grid-column: span 2;
-  }
-}
-
-/* Smartphone / HP (<= 480px) */
+/* Smartphone Layar Kecil (<= 480px) */
 @media (max-width: 480px) {
-  .bento-gallery-container {
-    grid-template-columns: 1fr;           /* 1 Kolom Penuh */
-    grid-auto-rows: 220px;
-    gap: 10px;
-  }
+    .navbar { align-items: start; }
+    .post-title { font-size: 1.6rem; }
+    .post-content { font-size: 1rem; }
 
-  .bento-normal,
-  .bento-wide,
-  .bento-tall,
-  .bento-big {
-    grid-column: span 1 !important;
-    grid-row: span 1 !important;
-  }
+    .bento-gallery-container {
+        grid-template-columns: 1fr;
+        grid-auto-rows: 220px;
+        gap: 10px;
+    }
 
-  .bento-tall,
-  .bento-big {
-    grid-row: span 2 !important;
-  }
+    .bento-normal,
+    .bento-wide,
+    .bento-tall,
+    .bento-big {
+        grid-column: span 1 !important;
+        grid-row: span 1 !important;
+    }
+
+    .bento-tall,
+    .bento-big {
+        grid-row: span 2 !important;
+    }
 }
