@@ -1,5 +1,8 @@
-{{ $ads := where .Site.RegularPages "Section" "ads" }}
-{{ $activeAds := where $ads "Params.active" true }}
+{{/* 1. Ambil halaman dari section 'ads' menggunakan site.Pages (bukan .Site.RegularPages) */}}
+{{ $ads := where site.Pages "Section" "ads" }}
+
+{{/* 2. Filter hanya file markdown asli (mengabaikan _index.md jika ada) dan berstatus active: true */}}
+{{ $activeAds := where (where $ads "IsPage" true) "Params.active" true }}
 
 {{ if $activeAds }}
 <aside class="sidebar-ads-container">
@@ -7,7 +10,6 @@
     <div class="ad-item" style="margin-bottom: 20px; text-align: center;">
       <a href="{{ .Params.link }}" target="_blank" rel="noopener sponsored">
         {{ if .Params.image }}
-          <!-- Hapus | relURL dan gunakan .Params.image langsung -->
           <img src="{{ .Params.image }}" alt="{{ .Title }}" style="max-width: 100%; height: auto; border-radius: 8px; display: block; margin: 0 auto;">
         {{ else }}
           <span>{{ .Title }}</span>
