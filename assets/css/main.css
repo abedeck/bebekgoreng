@@ -683,7 +683,8 @@ article table tr:nth-child(even),
 /* ==========================================================================
    6. PAGE WITH SIDEBAR (LAYOUT PERBAIKAN PRESISI)
    ========================================================================== */
-.page-with-sidebar {
+
+   .page-with-sidebar {
     display: flex;
     justify-content: center;
     align-items: flex-start;
@@ -1256,5 +1257,66 @@ article table tr:nth-child(even),
     .bento-tall,
     .bento-big {
         grid-row: span 2 !important;
+    }
+}
+
+/* ==========================================================================
+   FIX LAYOUT SINGLE POST & SIDEBAR IKLAN
+   ========================================================================== */
+
+/* 1. Paksa pembungkus utama single post menggunakan FLEX */
+.post-layout-wrapper {
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 2.5rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px 1.5rem;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* 2. Artikel Utama (Tengah/Kiri) */
+.post-layout-wrapper .post-single,
+.post-layout-wrapper article {
+    flex: 1 1 auto;
+    min-width: 0; /* Penting agar artikel tidak meluap */
+    max-width: 800px;
+}
+
+/* 3. Sidebar Kanan (Iklan) */
+.post-layout-wrapper .post-sidebar,
+.post-sidebar {
+    width: 300px !important;
+    min-width: 300px !important;
+    max-width: 300px !important;
+    flex-shrink: 0 !important;
+    display: block !important;
+}
+
+/* 4. Gambar Iklan dalam Sidebar */
+.sidebar-ad-item img,
+.ad-banner-img {
+    width: 100% !important;
+    height: auto !important;
+    display: block !important;
+    object-fit: contain;
+    border-radius: 8px;
+}
+
+/* 5. Responsif di Layar HP/Tablet */
+@media (max-width: 992px) {
+    .post-layout-wrapper {
+        flex-direction: column !important;
+        align-items: center;
+    }
+
+    .post-layout-wrapper .post-single,
+    .post-sidebar {
+        width: 100% !important;
+        max-width: 100% !important;
+        min-width: 0 !important;
     }
 }
