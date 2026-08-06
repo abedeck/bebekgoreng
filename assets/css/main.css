@@ -724,6 +724,30 @@ article table tr:nth-child(even),
     display: block;             /* Menghilangkan celah kosong di bawah gambar */
     object-fit: contain;        /* Memastikan seluruh isi gambar terlihat sempurna */
 }
+/* Pastikan link bertindak sebagai pembungkus block */
+.sidebar-ad-item a.ad-banner-link {
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    text-decoration: none;
+    overflow: hidden;
+}
+
+/* Memaksa elemen gambar mengikuti lebar penuh pembungkusnya */
+.sidebar-ad-item img.ad-banner-img {
+    width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important;
+    display: block !important;
+    object-fit: cover; /* atau 'contain' jika ingin rasio gambar tidak terpotong */
+}
+
+/* Membatasi wadah iklan agar tidak meluap dari sidebar */
+.sidebar-ad-item {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+}
 /* ==========================================================================
    7. CLASSIC BLOG & SIDEBAR WIDGETS
    ========================================================================== */
