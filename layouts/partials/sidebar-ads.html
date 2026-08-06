@@ -1,0 +1,18 @@
+{{ $ads := where .Site.RegularPages "Section" "ads" }}
+{{ $activeAds := where $ads "Params.active" true }}
+
+{{ if $activeAds }}
+<aside class="sidebar-ads-container">
+  {{ range sort $activeAds "Params.weight" "asc" }}
+    <div class="ad-item" style="margin-bottom: 20px; text-align: center;">
+      <a href="{{ .Params.link }}" target="_blank" rel="noopener sponsored">
+        {{ if .Params.image }}
+          <img src="{{ .Params.image | relURL }}" alt="{{ .Title }}" style="max-width: 100%; height: auto; border-radius: 8px; display: block; margin: 0 auto;">
+        {{ else }}
+          <span>{{ .Title }}</span>
+        {{ end }}
+      </a>
+    </div>
+  {{ end }}
+</aside>
+{{ end }}

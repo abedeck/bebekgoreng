@@ -1208,6 +1208,14 @@ article table tr:nth-child(even),
     white-space: nowrap;
     -webkit-overflow-scrolling: touch;
   }
+  .post-layout-container {
+    flex-direction: column !important;
+  }
+  .post-sidebar {
+    width: 100% !important;
+    position: static !important;
+    margin-top: 2rem;
+  }
 }
 
 /* ==========================================================================
