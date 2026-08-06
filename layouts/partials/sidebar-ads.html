@@ -1,11 +1,8 @@
-{{/* 1. Ambil halaman dari section 'ads' menggunakan site.Pages (bukan .Site.RegularPages) */}}
+{{/* Menggunakan site.Pages agar menjangkau semua section tanpa terpengaruh scope halaman */}}
 {{ $ads := where site.Pages "Section" "ads" }}
-
-{{/* 2. Filter hanya file markdown asli (mengabaikan _index.md jika ada) dan berstatus active: true */}}
 {{ $activeAds := where (where $ads "IsPage" true) "Params.active" true }}
 
 {{ if $activeAds }}
-<aside class="sidebar-ads-container">
   {{ range sort $activeAds "Params.weight" "asc" }}
     <div class="ad-item" style="margin-bottom: 20px; text-align: center;">
       <a href="{{ .Params.link }}" target="_blank" rel="noopener sponsored">
@@ -17,5 +14,4 @@
       </a>
     </div>
   {{ end }}
-</aside>
 {{ end }}
